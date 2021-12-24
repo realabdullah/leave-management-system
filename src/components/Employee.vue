@@ -10,7 +10,7 @@
                   Employee Name
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Title
+                  Department
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Date Registered
@@ -18,7 +18,7 @@
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <tr>
+              <tr v-for="employee in employeesData">
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="flex items-center">
                     <div class="flex-shrink-0 h-10 w-10">
@@ -26,20 +26,21 @@
                     </div>
                     <div class="ml-4">
                       <div class="text-sm font-medium text-gray-900">
-                        Jane Cooper
+                        {{ employee.name }}
                       </div>
                       <div class="text-sm text-gray-500">
-                        jane.cooper@example.com
+                        {{ employee.email }}
                       </div>
                     </div>
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="text-sm text-gray-900">Regional Paradigm Technician</div>
-                  <div class="text-sm text-gray-500">Optimization</div>
+                  <div class="text-sm text-gray-900">
+                    {{ employee.department }}
+                  </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  Dec, 15
+                  {{ getFormattedDate(employee.created_at.date) }}
                 </td>
               </tr>
 
@@ -53,8 +54,63 @@
 </template>
 
 <script>
-export default {
+import { ref, onBeforeMount } from 'vue'
+import { supabase } from '../supabase'
 
+export default {
+  setup () {
+    const employeesData = ref([])
+    const date = ref('toLocaleDateString(undefined, options)')
+
+    const getEmployees = async () => {
+      try {
+        const { data: employees, error } = await supabase
+        .from('employees')
+        .select('*')
+        employeesData.value = employees
+        // console.log(employeesData.value)
+        if (error) {
+          // console.log(error)
+        }
+      }
+      catch (error) {
+        // console.log(error)
+      }
+    }
+
+    function getFormattedDate(value) {
+      var date = new Date();
+
+      var month = date.getMonth() + 1;
+      var day = date.getDate();
+      var hour = date.getHours();
+      var min = date.getMinutes();
+      var sec = date.getSeconds();
+
+      month = (month < 10 ? "0" : "") + month;
+      day = (day < 10 ? "0" : "") + day;
+      hour = (hour < 10 ? "0" : "") + hour;
+      min = (min < 10 ? "0" : "") + min;
+      sec = (sec < 10 ? "0" : "") + sec;
+
+      var str = date.getFullYear() + "-" + month + "-" + day + "_" +  hour + ":" + min + ":" + sec;
+
+      /*alert(str);*/
+      console.log(str)
+
+      return str;
+    }
+
+    onBeforeMount(() => {
+      getEmployees()
+      getFormattedDate()
+    })
+
+    return {
+      employeesData,
+      getFormattedDate
+    }
+  }
 }
 </script>
 
