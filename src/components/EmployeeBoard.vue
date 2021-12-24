@@ -167,14 +167,11 @@ const user = {
 }
 const navigation = [
   { name: 'Overview', href: '#', current: true },
-  { name: 'Employees', href: '#', current: false },
-  { name: 'Requested Leave', href: '#', current: false },
   { name: 'Apply For Leave', href: '#', current: false },
   { name: 'Leave History', href: '#', current: false },
 ]
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
   { name: 'Sign out', href: '#' },
 ]
 

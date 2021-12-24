@@ -1,18 +1,20 @@
 <template>
   <div class="min-h-full">
     <AdminNav />
-    <AdminOverview />
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <Department />
+    </div>
   </div>
 </template>
 
 <script>
 import AdminNav from '../components/AdminNav.vue'
-import AdminOverview from '../components/AdminOverview.vue'
+import Department from '../components/Department.vue'
 
 export default {
   components: {
     AdminNav,
-    AdminOverview
+    Department
   }
 }
 </script>
