@@ -40,7 +40,7 @@
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {{ getFormattedDate(employee.created_at.date) }}
+                  {{ employee.created_at }}
                 </td>
               </tr>
 
@@ -60,7 +60,6 @@ import { supabase } from '../supabase'
 export default {
   setup () {
     const employeesData = ref([])
-    const date = ref('toLocaleDateString(undefined, options)')
 
     const getEmployees = async () => {
       try {
@@ -78,37 +77,14 @@ export default {
       }
     }
 
-    function getFormattedDate(value) {
-      var date = new Date();
-
-      var month = date.getMonth() + 1;
-      var day = date.getDate();
-      var hour = date.getHours();
-      var min = date.getMinutes();
-      var sec = date.getSeconds();
-
-      month = (month < 10 ? "0" : "") + month;
-      day = (day < 10 ? "0" : "") + day;
-      hour = (hour < 10 ? "0" : "") + hour;
-      min = (min < 10 ? "0" : "") + min;
-      sec = (sec < 10 ? "0" : "") + sec;
-
-      var str = date.getFullYear() + "-" + month + "-" + day + "_" +  hour + ":" + min + ":" + sec;
-
-      /*alert(str);*/
-      console.log(str)
-
-      return str;
-    }
-
     onBeforeMount(() => {
       getEmployees()
-      getFormattedDate()
+      const user = supabase.auth.user()
+      // console.log(user)
     })
 
     return {
-      employeesData,
-      getFormattedDate
+      employeesData
     }
   }
 }

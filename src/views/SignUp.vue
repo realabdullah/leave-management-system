@@ -52,7 +52,36 @@
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
               <LockClosedIcon class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
             </span>
-            Sign Up
+            <div v-if="!loading">Sign Up</div>
+            <div class="svg" v-else>
+              <svg version="1.1" id="L4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+              viewBox="0 0 100 100" enable-background="new 0 0 0 0" xml:space="preserve">
+                <circle fill="#fff" stroke="none" cx="6" cy="50" r="6">
+                  <animate
+                    attributeName="opacity"
+                    dur="1s"
+                    values="0;1;0"
+                    repeatCount="indefinite"
+                    begin="0.1"/>    
+                </circle>
+                <circle fill="#fff" stroke="none" cx="26" cy="50" r="6">
+                  <animate
+                    attributeName="opacity"
+                    dur="1s"
+                    values="0;1;0"
+                    repeatCount="indefinite" 
+                    begin="0.2"/>       
+                </circle>
+                <circle fill="#fff" stroke="none" cx="46" cy="50" r="6">
+                  <animate
+                    attributeName="opacity"
+                    dur="1s"
+                    values="0;1;0"
+                    repeatCount="indefinite" 
+                    begin="0.3"/>     
+                </circle>
+              </svg>
+            </div>
           </button>
         </div>
       </form>
@@ -81,6 +110,7 @@ export default {
     const department = ref('')
     const password = ref('')
     const userId = ref('')
+    const loading = ref(false)
 
     // const store = reactive({
     //   user: {}
@@ -88,17 +118,21 @@ export default {
 
     const signUp = async () => {
       try {
-        // loading.value = true
+        loading.value = true
         const { user, error } = await supabase.auth.signUp(
           {
             email: email.value,
             password: password.value
           }
         )
+        // console.log(user)
         // userData.value = user
         userId.value = user.id
-        // console.log(userId.value)
-        await addData()
+        await addData()   
+        router.push({
+          path: '/login'
+        })     
+        loading.value = false
       }
       catch(error) {
         // console.log('Error signing up!')
@@ -110,18 +144,18 @@ export default {
         const { data, error } = await supabase
         .from('employees')
         .insert([
-          { 
-            user_id: userId.value, 
+          {
             name: fname.value, 
             email: email.value, 
             phone: phone.value, 
             gender: gender.value, 
-            department: department.value 
+            department: department.value,
+            employee_id: userId.value
           },
         ])
         // console.log(userId.value)
         if (error) {
-          alert(error.message)
+          // alert(error.message)
           // console.error('There was an error inserting', error)
           return null
         } else {
@@ -140,6 +174,7 @@ export default {
       gender,
       department,
       password,
+      loading,
       signUp
     }
   }

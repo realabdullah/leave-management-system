@@ -8,7 +8,7 @@
           </div>
           <div class="hidden md:block">
             <div class="ml-10 flex items-baseline space-x-4">
-              <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'px-3 py-2 rounded-md text-sm font-medium']" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</a>
+              <router-link :to="item.href" v-for="item in navigation" :key="item.name" :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'px-3 py-2 rounded-md text-sm font-medium']" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</router-link>
             </div>
           </div>
         </div>
@@ -30,7 +30,8 @@
               <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
                 <MenuItems class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
-                    <a :href="item.href" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">{{ item.name }}</a>
+                    <p v-if="item.name != 'Sign out'" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">{{ item.name }}</p>
+                    <p v-else @click="logOut" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">{{ item.name }}</p>
                   </MenuItem>
                 </MenuItems>
               </transition>
@@ -67,7 +68,14 @@
           </button>
         </div>
         <div class="mt-3 px-2 space-y-1">
-          <DisclosureButton v-for="item in userNavigation" :key="item.name" as="a" :href="item.href" class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">{{ item.name }}</DisclosureButton>
+          <DisclosureButton v-for="item in userNavigation" :key="item.name" as="a" class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">
+            <span v-if="item.name != 'Sign out'">
+              {{ item.name }}
+            </span>
+            <span v-else @click="logOut">
+              {{ item.name }}
+            </span>
+          </DisclosureButton>
         </div>
       </div>
     </DisclosurePanel>
@@ -75,6 +83,10 @@
 </template>
 
 <script>
+import { ref, onBeforeMount } from 'vue'
+import { useRouter } from 'vue-router'
+import { supabase } from '../supabase'
+
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline'
 
@@ -85,18 +97,18 @@ const user = {
     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
 const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-  { name: 'Departments', href: '/#/departments', current: false },
-  { name: 'Employees', href: '/#/employees', current: false },
-  { name: 'All Leaves', href: '/#/leaves', current: false },
+  { name: 'Dashboard', href: '/admin', current: false },
+  { name: 'Departments', href: '/departments', current: false },
+  { name: 'Employees', href: '/employees', current: false },
+  { name: 'All Leaves', href: '/leaves', current: false },
   { name: 'Approved Leaves', href: '#', current: false },
   { name: 'Pending Leaves', href: '#', current: false },
   { name: 'Cancelled Leaves', href: '#', current: false },
 ]
 const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
+  { name: 'Your Profile', href: '#', function: '' },
+  { name: 'Settings', href: '#', function: '' },
+  { name: 'Sign out', function: 'logOut' },
 ]
 
 export default {
@@ -113,7 +125,23 @@ export default {
     XIcon,
   },
   setup() {
+    const router = useRouter()
+
+    const logOut = async () => {
+      try {
+        const { error } = await supabase.auth.signOut()
+        console.log('logged out!')
+        router.push({
+          path: '/'
+        })
+      }
+      catch(error) {
+        
+      }
+    }
+
     return {
+      logOut,
       user,
       navigation,
       userNavigation,
