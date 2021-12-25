@@ -59,8 +59,8 @@
             <img class="h-10 w-10 rounded-full" :src="user.imageUrl" alt="" />
           </div>
           <div class="ml-3">
-            <div class="text-base font-medium leading-none text-white">{{ user.name }}</div>
-            <div class="text-sm font-medium leading-none text-gray-400">{{ user.email }}</div>
+            <div class="text-base font-medium leading-none text-white">{{ userInfo.name }}</div>
+            <div class="text-sm font-medium leading-none text-gray-400">{{ userInfo.email }}</div>
           </div>
           <button type="button" class="ml-auto bg-gray-800 flex-shrink-0 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
             <span class="sr-only">View notifications</span>
@@ -94,7 +94,7 @@ const user = {
   name: 'Tom Cook',
   email: 'tom@example.com',
   imageUrl:
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    'https://source.unsplash.com/MP0IUfwrn0A',
 }
 const navigation = [
   { name: 'Dashboard', href: '/staff', current: false },
@@ -121,6 +121,8 @@ export default {
   setup() {
     const router = useRouter()
 
+    const userInfo = ref([])
+
     const logOut = async () => {
       try {
         const { error } = await supabase.auth.signOut()
@@ -134,11 +136,16 @@ export default {
       }
     }
 
+    onBeforeMount(() => {
+      userInfo.value = supabase.auth.user()
+    })
+
     return {
       logOut,
       user,
       navigation,
       userNavigation,
+      userInfo
     }
   },
 }

@@ -11,6 +11,7 @@
       <!-- Replace with your content -->
       <StaffStats />
       <StaffLeaves />
+      <StaffProfile />
       <!-- /End replace -->
     </div>
   </main>
@@ -19,11 +20,13 @@
 <script>
 import StaffStats from '../components/StaffStats.vue'
 import StaffLeaves from '../components/StaffLeaves.vue'
+import StaffProfile from '../components/StaffProfile.vue'
 
 export default {
   components: {
     StaffStats,
-    StaffLeaves
+    StaffLeaves,
+    StaffProfile
   }
 }
 
