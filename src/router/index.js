@@ -59,6 +59,12 @@ const routes = [
     name: 'Leaves',
     component: () => import('../views/Leaves.vue'),
     beforeEnter: requireAuth
+  },
+  {
+    path: '/apply-for-leave',
+    name: 'Apply-for-leave',
+    component: () => import('../views/LeaveApp.vue'),
+    beforeEnter: requireAuth
   }
 ]
 

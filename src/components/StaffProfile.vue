@@ -15,7 +15,9 @@
 
         <div class="pt-12 pb-8">
           <button class="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full">
-            Apply for leave
+            <router-link to="apply-for-leave">
+              Apply for leave
+            </router-link>
           </button> 
         </div>
         <!-- Use https://simpleicons.org/ to find the svg for your preferred product --> 
