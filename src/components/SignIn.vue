@@ -98,6 +98,8 @@ export default {
     const userM = ref('')
     const loginError = ref('')
     const loading = ref(false)
+    const userRoles = ref([])
+    const userType = ref('')
 
     const router = useRouter()
 
@@ -117,14 +119,30 @@ export default {
         } else {
           userM.value = user
           // console.log(userM.value)
-          router.push({
-            path: '/employees'
-          })
+          getRole()
           loading.value = false
         }
       }
       catch (error) {
         console.log(error)
+      }
+    }
+
+    const getRole = async () => {
+      const { data: user_roles, error } = await supabase
+      .from('user_roles')
+      .select('role')
+      userRoles.value = user_roles
+      userType.value = userRoles.value[0].role
+      console.log(userType.value)
+      if(userType.value == 'staff') {
+        router.push({
+          path: '/staff'
+        })
+      } else {
+        router.push({
+          path: '/admin'
+        })
       }
     }
 

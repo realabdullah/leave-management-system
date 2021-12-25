@@ -37,6 +37,12 @@ const routes = [
     beforeEnter: requireAuth
   },
   {
+    path: '/staff',
+    name: 'Staff',
+    component: () => import('../views/Staff.vue'),
+    beforeEnter: requireAuth
+  },
+  {
     path: '/employees',
     name: 'Employee',
     component: () => import('../views/Employees.vue'),
