@@ -98,12 +98,8 @@ const user = {
 }
 const navigation = [
   { name: 'Dashboard', href: '/admin', current: false },
-  { name: 'Departments', href: '/departments', current: false },
-  { name: 'Employees', href: '/employees', current: false },
-  { name: 'All Leaves', href: '/leaves', current: false },
-  { name: 'Approved Leaves', href: '#', current: false },
-  { name: 'Pending Leaves', href: '#', current: false },
-  { name: 'Cancelled Leaves', href: '#', current: false },
+  { name: 'Staffs', href: '/employees', current: false },
+  { name: 'Leaves', href: '/leaves', current: false }
 ]
 const userNavigation = [
   { name: 'Your Profile', href: '#', function: '' },

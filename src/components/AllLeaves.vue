@@ -10,16 +10,19 @@
                   Employee Name
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Title
-                </th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Leave Type
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Leave Status
+                  Date Applied
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Date Applied
+                  From
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  To
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Status
                 </th>
                 <th scope="col" class="relative px-6 py-3">
                   <span class="sr-only">Edit</span>
@@ -27,7 +30,7 @@
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <tr>
+              <tr v-for="leaves in allLeaves">
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="flex items-center">
                     <div class="flex-shrink-0 h-10 w-10">
@@ -35,24 +38,35 @@
                     </div>
                     <div class="ml-4">
                       <div class="text-sm font-medium text-gray-900">
-                        Jane Cooper
+                        {{ leaves.name }}
                       </div>
                       <div class="text-sm text-gray-500">
-                        jane.cooper@example.com
+                        {{ leaves.email }}
                       </div>
                     </div>
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="text-sm text-gray-900">Regional Paradigm Technician</div>
-                  <div class="text-sm text-gray-500">Optimization</div>
+                  <div class="text-sm text-gray-900">{{ leaves.leave_type }}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="text-sm text-gray-900">Maternity Leave</div>
+                  <div class="text-sm text-gray-900">{{ leaves.date_applied }}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                    Active
+                  <div class="text-sm text-gray-900">{{ leaves.from_date }}</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-900">{{ leaves.to_date }}</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span v-if="leaves.status == 'Pending'" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-300 text-green-800">
+                    {{ leaves.status }}
+                  </span>
+                  <span v-if="leaves.status == 'Approved'" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                    {{ leaves.status }}
+                  </span>
+                  <span v-if="leaves.status == 'Declined'" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                    {{ leaves.status }}
                   </span>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -73,8 +87,36 @@
 </template>
 
 <script>
-export default {
+import { ref, onBeforeMount } from 'vue'
+import { supabase } from '../supabase'
 
+export default {
+  setup () {
+    const allLeaves = ref([])
+
+    const getAllLeaves = async () => {
+      try {
+        const { data: leaves, error } = await supabase
+        .from('leaves')
+        .select('*')
+        allLeaves.value = leaves
+        console.log(allLeaves.value)
+        if(error) {
+          console.log(error)
+        }
+      } catch (error) {
+        
+      }
+    }
+
+    onBeforeMount(() => {
+      getAllLeaves()
+    })
+
+    return {
+      allLeaves
+    }
+  }
 }
 </script>
 
