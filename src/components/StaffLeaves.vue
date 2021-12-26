@@ -59,13 +59,13 @@
                   {{ leave.to_date }}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                  <span v-if="leave.status == 'Pending'" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-300 text-green-800">
+                  <span v-if="leave.status == 'Pending'" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-300 text-red-800">
                     {{ leave.status }}
                   </span>
                   <span v-if="leave.status == 'Approved'" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                     {{ leave.status }}
                   </span>
-                  <span v-if="leave.status == 'Declined'" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                  <span v-if="leave.status == 'Declined'" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
                     {{ leave.status }}
                   </span>
                 </td>
@@ -96,9 +96,9 @@ export default {
         .select('*')
         .eq('user_id', userId.value)
         leaveData.value = leaves
-        console.log(leaveData.value)
+        // console.log(leaveData.value)
         if(error) {
-          console.log(error)
+          // console.log(error)
         }
       } catch (error) {
         

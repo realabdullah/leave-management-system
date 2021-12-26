@@ -124,7 +124,7 @@ export default {
         }
       }
       catch (error) {
-        console.log(error)
+        // console.log(error)
       }
     }
 
@@ -134,7 +134,7 @@ export default {
       .select('role')
       userRoles.value = user_roles
       userType.value = userRoles.value[0].role
-      console.log(userType.value)
+      // console.log(userType.value)
       if(userType.value == 'staff') {
         router.push({
           path: '/staff'

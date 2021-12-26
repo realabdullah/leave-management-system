@@ -16,7 +16,7 @@
               <div class="grid grid-cols-6 gap-6">
                 <div class="col-span-6 sm:col-span-3">
                   <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
-                  <input v-model="staffName" type="text" name="name" id="name" autocomplete="given-name" class="mt-1 px-3 py-2 border focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required/>
+                  <input v-model="staffName" type="text" name="name" id="name" autocomplete="given-name" class="mt-1 px-3 py-2 border focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" disabled/>
                 </div>
 
                 <div class="col-span-6 sm:col-span-3">
@@ -26,7 +26,7 @@
 
                 <div class="col-span-6 sm:col-span-4">
                   <label for="department" class="block text-sm font-medium text-gray-700">Department</label>
-                  <input v-model="department" type="text" name="department" id="department" autocomplete="department" class="mt-1 px-3 py-2 border focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required/>
+                  <input v-model="department" type="text" name="department" id="department" autocomplete="department" class="mt-1 px-3 py-2 border focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" disabled/>
                 </div>
 
                 <div class="col-span-6 sm:col-span-3">
@@ -34,8 +34,8 @@
                   <select v-model="maritalStatus" id="marital-status" name="marital-status" autocomplete="status" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                     <option value=""></option>
                     <option value="Single">Single</option>
-                    <option value="Married">Married Leave</option>
-                    <option value="Divorced">Divorced Leave</option>
+                    <option value="Married">Married</option>
+                    <option value="Divorced">Divorced</option>
                   </select>
                 </div>
               </div>
@@ -205,7 +205,7 @@ export default {
         email.value = staffPre.value[0].email
         department.value = staffPre.value[0].department
         if(error) {
-          console.log(error)
+          // console.log(error)
         } else {
           //
         }
@@ -236,11 +236,11 @@ export default {
           }
         ])
         if(error) {
-          console.log(error)
+          // console.log(error)
           loading.value = false
           applied.value = false
         } else {
-          console.log(data)
+          // console.log(data)
           loading.value = false
           applied.value = true
         }
@@ -252,7 +252,7 @@ export default {
 
     onBeforeMount(() => {
       userId.value = supabase.auth.user().id
-      console.log(userId.value)
+      // console.log(userId.value)
       getStaffData()
     })
 

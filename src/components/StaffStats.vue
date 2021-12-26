@@ -69,7 +69,7 @@ export default {
         approvedLeaves.value = leaves
         // console.log(approvedLeaves.value)
         if(error) {
-          console.log(error)
+          // console.log(error)
         }
       } catch (error) {
         

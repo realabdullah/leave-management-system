@@ -126,7 +126,7 @@ export default {
     const logOut = async () => {
       try {
         const { error } = await supabase.auth.signOut()
-        console.log('logged out!')
+        // console.log('logged out!')
         router.push({
           path: '/'
         })
