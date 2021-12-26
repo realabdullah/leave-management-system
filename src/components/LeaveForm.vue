@@ -206,8 +206,7 @@ export default {
             leave_type: leaveType.value,
             from_date: leaveFrom.value,
             to_date: leaveTo.value,
-            user_id: userId.value,
-            staff_id: userId.value
+            user_id: userId.value
           }
         ])
         if(error) {
