@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="addLeave">
+  <form @submit.prevent="addLeave" v-if="!applied">
     <div class="mt-10 sm:mt-0">
       <div class="md:grid md:grid-cols-3 md:gap-6">
         <div class="md:col-span-1">
@@ -144,6 +144,32 @@
       </div>
     </div>
   </form>
+  <!--modal content-->
+  <div v-else class="relative top-20 mx-auto mb-10 p-5 border w-96 shadow-lg rounded-md bg-white">
+    <div class="mt-3 text-center">
+      <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100">
+        <svg class="h-6 w-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
+          </path>
+        </svg>
+      </div>
+      <h3 class="mt-3 text-lg leading-6 font-medium text-gray-900">Success!</h3>
+      <div class="mt-2 px-7 py-3">
+        <p class="text-sm text-gray-500">
+          You have successfully apply for a leave.
+        </p>
+      </div>
+      <div class="items-center px-4 py-3">
+        <router-link to="/staff">
+          <button
+            class="px-4 py-2 text-white text-base font-medium rounded-md w-full shadow-sm bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          >            
+            Okay
+          </button>
+        </router-link>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -167,7 +193,9 @@ export default {
     const leaveType = ref('')
     const leaveFrom = ref('')
     const leaveTo = ref('')
+    const status = ref('Pending')
     const loading = ref(false)
+    const applied = ref(false)
 
     const getStaffData = async () => {
       try {
@@ -206,15 +234,18 @@ export default {
             leave_type: leaveType.value,
             from_date: leaveFrom.value,
             to_date: leaveTo.value,
+            status: status.value,
             user_id: userId.value
           }
         ])
         if(error) {
           console.log(error)
           loading.value = false
+          applied.value = false
         } else {
           console.log(data)
           loading.value = false
+          applied.value = true
         }
       }
       catch(error) {
@@ -239,7 +270,8 @@ export default {
       leaveFrom,
       leaveTo,
       loading,
-      addLeave
+      addLeave,
+      applied
     }
   }
 }

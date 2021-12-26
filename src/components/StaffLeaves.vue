@@ -10,16 +10,19 @@
                   Employee Name
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Title
-                </th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Leave Type
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Leave Status
+                  Date Applied
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Date Applied
+                  From
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  To
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Leave Status
                 </th>
                 <th scope="col" class="relative px-6 py-3">
                   <span class="sr-only">Edit</span>
@@ -27,7 +30,7 @@
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <tr>
+              <tr v-for="leave in leaveData">
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="flex items-center">
                     <div class="flex-shrink-0 h-10 w-10">
@@ -35,31 +38,36 @@
                     </div>
                     <div class="ml-4">
                       <div class="text-sm font-medium text-gray-900">
-                        Jane Cooper
+                        {{ leave.name }}
                       </div>
                       <div class="text-sm text-gray-500">
-                        jane.cooper@example.com
+                        {{ leave.email }}
                       </div>
                     </div>
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="text-sm text-gray-900">Regional Paradigm Technician</div>
-                  <div class="text-sm text-gray-500">Optimization</div>
+                  <div class="text-sm text-gray-900">{{ leave.leave_type }}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="text-sm text-gray-900">Maternity Leave</div>
+                  <div class="text-sm text-gray-500">{{ leave.date_applied }}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                    Active
-                  </span>
+                  <div class="text-sm text-gray-500">{{ leave.from_date }}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  Dec, 15
+                  {{ leave.to_date }}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                  <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                  <span v-if="leave.status == 'Pending'" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-300 text-green-800">
+                    {{ leave.status }}
+                  </span>
+                  <span v-if="leave.status == 'Approved'" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                    {{ leave.status }}
+                  </span>
+                  <span v-if="leave.status == 'Declined'" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                    {{ leave.status }}
+                  </span>
                 </td>
               </tr>
 
@@ -73,8 +81,39 @@
 </template>
 
 <script>
-export default {
+import { ref, onBeforeMount } from 'vue'
+import { supabase } from '../supabase'
 
+export default {
+  setup () {
+    const leaveData = ref([])
+    const userId = ref('')
+
+    const getLeaveData = async () => {
+      try {
+        const { data: leaves, error } = await supabase
+        .from('leaves')
+        .select('*')
+        .eq('user_id', userId.value)
+        leaveData.value = leaves
+        console.log(leaveData.value)
+        if(error) {
+          console.log(error)
+        }
+      } catch (error) {
+        
+      }
+    }
+
+    onBeforeMount(() => {
+      userId.value = supabase.auth.user().id
+      getLeaveData()
+    })
+
+    return {
+      leaveData
+    }
+  }
 }
 </script>
 

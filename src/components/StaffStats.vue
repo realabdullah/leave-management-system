@@ -2,22 +2,93 @@
   <div class="card-pack">
     <div class="hc-card">
       <p>All Leaves</p>
-      <h1>20</h1>
+      <h1>{{ allLeaves.length }}</h1>
     </div>
     <div class="hc-card">
       <p>Approved Leaves</p>
-      <h1>20</h1>
+      <h1>{{ approvedLeaves.length }}</h1>
     </div>
     <div class="hc-card">
       <p>Pending Leaves</p>
-      <h1>20</h1>
+      <h1>{{ pendingLeaves.length }}</h1>
     </div>
   </div>
 </template>
 
 <script>
-export default {
+import { ref, onBeforeMount } from 'vue'
+import { supabase } from '../supabase'
 
+export default {
+  setup () {
+    const allLeaves = ref([])
+    const approvedLeaves = ref([])
+    const pendingLeaves = ref([])
+    const userId = ref('')
+
+    const all = async () => {
+      try {
+        const { data: leaves, error } = await supabase
+        .from('leaves')
+        .select('*')
+        .eq('user_id', userId.value)
+        allLeaves.value = leaves
+        // console.log(allLeaves.value)
+        if(error) {
+          // console.log(error)
+        }
+      } catch (error) {
+        
+      }
+    }
+
+    const pending = async () => {
+      try {
+        const { data: leaves, error } = await supabase
+        .from('leaves')
+        .select('status')
+        .eq('user_id', userId.value)
+        .eq('status', 'Pending')
+        pendingLeaves.value = leaves
+        // console.log(pendingLeaves.value)
+        if(error) {
+          // console.log(error)
+        }
+      } catch (error) {
+        
+      }
+    }
+
+    const approved = async () => {
+      try {
+        const { data: leaves, error } = await supabase
+        .from('leaves')
+        .select('status')
+        .eq('user_id', userId.value)
+        .eq('status', 'Approved')
+        approvedLeaves.value = leaves
+        // console.log(approvedLeaves.value)
+        if(error) {
+          console.log(error)
+        }
+      } catch (error) {
+        
+      }
+    }
+
+    onBeforeMount(() => {
+      userId.value = supabase.auth.user().id
+      all()
+      pending()
+      approved()
+    })
+
+    return {
+      allLeaves,
+      pendingLeaves,
+      approvedLeaves
+    }
+  }
 }
 </script>
 

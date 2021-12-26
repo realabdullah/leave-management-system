@@ -97,11 +97,10 @@ const user = {
     'https://source.unsplash.com/MP0IUfwrn0A',
 }
 const navigation = [
-  { name: 'Dashboard', href: '/staff', current: false },
-  { name: 'Leave History', href: '/staff', current: false }
+  { name: 'Dashboard', href: '/staff', current: false }
 ]
 const userNavigation = [
-  { name: 'Your Profile', href: '#', function: '' },
+  // { name: 'Your Profile', href: '#', function: '' },
   { name: 'Sign out', function: 'logOut' },
 ]
 
