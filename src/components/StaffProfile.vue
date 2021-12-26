@@ -8,13 +8,13 @@
         <div class="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 bg-cover bg-center" style="background-image: url('https://source.unsplash.com/MP0IUfwrn0A')"></div>
         
         <h1 class="text-3xl font-bold pt-8 lg:pt-0">{{ profile.name }}</h1>
-        <div class="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-green-500 opacity-25"></div>
+        <div class="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-indigo-500 opacity-25"></div>
         <p class="pt-4 text-base font-bold flex items-center justify-center lg:justify-start">{{ profile.department }}</p>
         <p class="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start">{{ profile.email }}</p>
         <p class="pt-8 text-sm">Totally optional short description about yourself, what you do and so on.</p>
 
         <div class="pt-12 pb-8">
-          <button class="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full">
+          <button class="bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white font-bold py-2 px-4 rounded-full">
             <router-link to="apply-for-leave">
               Apply for leave
             </router-link>
