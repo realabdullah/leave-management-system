@@ -202,7 +202,7 @@ export default {
     const approving = ref(false);
     const rejecting = ref(false);
     const email = ref("");
-    const pa
+    const password = ref('')
 
     const getRequestDetails = async () => {
       try {
@@ -212,6 +212,7 @@ export default {
           .eq("id", userId.value);
         requestDetails.value = preusers;
         email.value = requestDetails.value[0].email;
+        password.value = requestDetails.value[0].password
         if (error) {
           // console.log(error)
         } else {
@@ -227,11 +228,10 @@ export default {
             email: email.value,
             password: password.value
           }
-        )  
+        )
         router.push({
           path: "/user-requests"
-        })     
-        loading.value = false
+        })
       }
       catch(error) {
         // console.log('Error signing up!')
@@ -240,14 +240,9 @@ export default {
 
     const signUser = async () => {
       try {
-        const { user, error } = await supabase.auth.api.inviteUserByEmail(
-          email.value
-        );
-        if (error) {
-          console.log(error);
-        } else {
-          console.log(user);
-        }
+        const { user, error } = await supabase.auth.signIn({
+          email: email.value
+        });
       } catch (error) {}
     };
 
