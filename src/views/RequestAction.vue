@@ -37,6 +37,22 @@
           <div
             class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
           >
+            <dt class="text-sm font-medium text-gray-500">Phone</dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              {{ details.phone }}
+            </dd>
+          </div>
+          <div
+            class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+          >
+            <dt class="text-sm font-medium text-gray-500">Gender</dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              {{ details.gender }}
+            </dd>
+          </div>
+          <div
+            class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+          >
             <dt class="text-sm font-medium text-gray-500">Staus</dt>
             <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
               {{ details.status }}
@@ -203,6 +219,7 @@ export default {
     const rejecting = ref(false);
     const email = ref("");
     const password = ref('')
+    const newId = ref('')
 
     const getRequestDetails = async () => {
       try {
@@ -229,9 +246,12 @@ export default {
             password: password.value
           }
         )
+        newId.value = user.id
+        await addNewInfo()
+        await signUser()
         router.push({
-          path: "/user-requests"
-        })
+          path: "/user-requests",
+        });
       }
       catch(error) {
         // console.log('Error signing up!')
@@ -246,6 +266,24 @@ export default {
       } catch (error) {}
     };
 
+    const addNewInfo = async () => {
+      try {
+        const { data, error } = await supabase
+        .from('employees')
+        .insert([
+          {
+            name: requestDetails.value[0].name, 
+            email: requestDetails.value[0].email,
+            phone: requestDetails.value[0].phone, 
+            gender: requestDetails.value[0].gender, 
+            department: requestDetails.value[0].department,
+            employee_id: newId.value
+          },
+        ])
+      }
+      catch (error) {}
+    }
+
     const approve = async () => {
       try {
         approving.value = true;
@@ -257,11 +295,8 @@ export default {
           // console.log(error)
           approving.value = false;
         } else {
-          signUser();
+          await signUp();
           console.log(data)
-          router.push({
-            path: "/user-requests",
-          });
           approving.value = false;
         }
       } catch (error) {}
