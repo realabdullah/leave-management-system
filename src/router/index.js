@@ -29,10 +29,6 @@ const getRole = async () => {
     router.push({
       path: '/staff'
     })
-  } else {
-    // router.push({
-    //   path: '/admin'
-    // })
   }
 }
 
