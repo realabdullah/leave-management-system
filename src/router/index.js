@@ -1,6 +1,9 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import { supabase } from '../supabase'
+import { ref } from 'vue'
+const userRoles = ref([])
+const userType = ref('')
 
 //auth guard
 const requireAuth = (to,from, next) => {
@@ -10,7 +13,26 @@ const requireAuth = (to,from, next) => {
       path: '/login'
     })
   } else {
+    getRole()
     next()
+  }
+}
+
+const getRole = async () => {
+  const { data: user_roles, error } = await supabase
+  .from('user_roles')
+  .select('role')
+  userRoles.value = user_roles
+  userType.value = userRoles.value[0].role
+  // console.log(userType.value)
+  if(userType.value == 'staff') {
+    router.push({
+      path: '/staff'
+    })
+  } else {
+    // router.push({
+    //   path: '/admin'
+    // })
   }
 }
 
@@ -67,9 +89,19 @@ const routes = [
     beforeEnter: requireAuth
   },
   {
+    path: '/user-requests',
+    name: 'User-requests',
+    component: () => import('../views/UserRequests.vue')
+  },
+  {
     path: '/leave-action/:id',
     name: 'Leave-action',
     component: () => import('../views/LeaveAction.vue')
+  },
+  {
+    path: '/request-action/:id',
+    name: 'Request-action',
+    component: () => import('../views/RequestAction.vue')
   }
 ]
 

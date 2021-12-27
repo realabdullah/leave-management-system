@@ -99,7 +99,8 @@ const user = {
 const navigation = [
   { name: 'Dashboard', href: '/admin', current: false },
   { name: 'Staffs', href: '/employees', current: false },
-  { name: 'Leaves', href: '/leaves', current: false }
+  { name: 'Leaves', href: '/leaves', current: false },
+  { name: 'Requests', href: '/user-requests', current: false }
 ]
 const userNavigation = [
   { name: 'Your Profile', href: '#', function: '' },
