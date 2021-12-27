@@ -158,7 +158,7 @@ export default {
 
     const signUser = async () => {
       try {    
-        const { user, error } = await supabase.auth.api.inviteUserByEmail({
+        const { user, error } = await supabase.auth.signIn({
           email: requestDetails.value[0].email
         })
       } catch (error) {
