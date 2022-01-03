@@ -193,7 +193,8 @@ export default {
     const user = reactive({
       name: '',
       email: '',
-      leave: ''
+      leave: '',
+      status: ''
     })
 
     const getLeaveDetails = async () => {
@@ -218,7 +219,8 @@ export default {
         // debugger
         user.name = leaveDetails.value[0].name,
         user.email = leaveDetails.value[0].email,
-        user.leave = leaveDetails.value[0].leave_type
+        user.leave = leaveDetails.value[0].leave_type,
+        user.status = leaveDetails.value[0].status
         console.log(user)
         const response = await axios.post('http://localhost:4000/user', user);
         console.log(response)
