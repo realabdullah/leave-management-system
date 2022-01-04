@@ -222,7 +222,7 @@ export default {
         user.leave = leaveDetails.value[0].leave_type,
         user.status = leaveDetails.value[0].status
         console.log(user)
-        const response = await axios.post('http://localhost:4000/user', user);
+        const response = await axios.post(process.env.VUE_APP_HEROKU, user);
         console.log(response)
       } catch (error) {}
     }
@@ -239,6 +239,7 @@ export default {
           approving.value = false
         } else {
           // console.log(data)
+          await getLeaveDetails()
           await approvalMail()
           router.push({
             path: '/leaves'
@@ -262,6 +263,8 @@ export default {
           rejecting.value = false
         } else {
           // console.log(data)
+          await getLeaveDetails()
+          await approvalMail()
           router.push({
             path: '/leaves'
           })
