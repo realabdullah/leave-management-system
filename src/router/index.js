@@ -87,7 +87,7 @@ const routes = [
     path: '/apply-for-leave',
     name: 'Apply-for-leave',
     component: () => import('../views/LeaveApp.vue'),
-    beforeEnter: requireAuth
+    // beforeEnter: requireAuth
   },
   {
     path: '/user-requests',
