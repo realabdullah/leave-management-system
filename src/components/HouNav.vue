@@ -86,7 +86,8 @@ import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline'
 //     'https://source.unsplash.com/MP0IUfwrn0A',
 // }
 const navigation = [
-  { name: 'Dashboard', href: '/head-of-unit', current: false }
+  { name: 'Dashboard', href: '/head-of-unit', current: false },
+  { name: 'Leaves', href: '/leaves', current: false }
 ]
 const userNavigation = [
   // { name: 'Your Profile', href: '#', function: '' },

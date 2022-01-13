@@ -83,6 +83,12 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: '/unit-leaves',
+    name: 'Unit Leaves',
+    component: () => import('../views/DeptLeaves.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/apply-for-leave',
     name: 'Apply-for-leave',
     component: () => import('../views/LeaveApp.vue'),
