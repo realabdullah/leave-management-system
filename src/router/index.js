@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import { supabase } from '../supabase'
 import { ref } from 'vue'
@@ -101,23 +101,23 @@ const routes = [
 
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes
 })
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     const user = supabase.auth.user()
-    if (user) {
+    if (user == null) {
       next({
         name: 'Login'
       })
     } else {
-      await getRole()
+      getRole()
       next()
     }
   } else {
-    await getRole()
+    getRole()
     next()
   }
 })
