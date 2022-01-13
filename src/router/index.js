@@ -86,7 +86,7 @@ const routes = [
     path: '/user-requests',
     name: 'User-requests',
     component: () => import('../views/UserRequests.vue'),
-    meta: { requiresAuth: true }
+    // meta: { requiresAuth: true }
   },
   {
     path: '/leave-action/:id',

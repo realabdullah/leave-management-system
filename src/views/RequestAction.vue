@@ -263,6 +263,9 @@ export default {
         const { user, error } = await supabase.auth.signIn({
           email: email.value
         });
+        if (error) {
+          console.log(error)
+        }
       } catch (error) {}
     };
 
@@ -292,7 +295,7 @@ export default {
           .update({ status: "Approved" })
           .eq("id", userId.value);
         if (error) {
-          // console.log(error)
+          console.log(error)
           approving.value = false;
         } else {
           await signUp();
