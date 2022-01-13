@@ -57,13 +57,13 @@
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <span v-if="leaves.hou_status == 'Pending'" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-300 text-red-800">
-                    {{ leaves.status }}
+                    {{ leaves.hou_status }}
                   </span>
                   <span v-if="leaves.hou_status == 'Approved'" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                    {{ leaves.status }}
+                    {{ leaves.hou_status }}
                   </span>
                   <span v-if="leaves.hou_status == 'Declined'" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                    {{ leaves.status }}
+                    {{ leaves.hou_status }}
                   </span>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -121,7 +121,7 @@ export default {
         .select('*')
         .eq('department', department.value)
         allLeaves.value = leaves
-        console.log(allLeaves.value)
+        // console.log(allLeaves.value)
         if(error) {
           // console.log(error)
         }
