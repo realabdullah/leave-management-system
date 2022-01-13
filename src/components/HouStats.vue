@@ -21,21 +21,40 @@ import { supabase } from '../supabase'
 
 export default {
   setup () {
+    const houDetails = ref([])
     const allLeaves = ref([])
     const approvedLeaves = ref([])
     const pendingLeaves = ref([])
     const userId = ref('')
+    const department = ref('')
+
+    const getHouDetails = async () => {
+      try {
+        const { data: employees, error } = await supabase
+        .from("employees")
+        .select("*")
+        .eq("employee_id", userId.value);
+        houDetails.value = employees;
+        department.value = houDetails.value[0].department
+        if (error) {
+          console.log(error)
+        } else {
+          // console.log(houDetails.value)
+          // console.log(department.value)
+        }
+      } catch (error) {}
+    }
 
     const all = async () => {
       try {
         const { data: leaves, error } = await supabase
         .from('leaves')
         .select('*')
-        .eq('user_id', userId.value)
+        .eq('department', department.value)
         allLeaves.value = leaves
-        // console.log(allLeaves.value)
+        console.log(allLeaves.value)
         if(error) {
-          // console.log(error)
+          console.log(error)
         }
       } catch (error) {
         
@@ -47,12 +66,12 @@ export default {
         const { data: leaves, error } = await supabase
         .from('leaves')
         .select('status')
-        .eq('user_id', userId.value)
+        .eq('department', department.value)
         .eq('status', 'Pending')
         pendingLeaves.value = leaves
         // console.log(pendingLeaves.value)
         if(error) {
-          // console.log(error)
+          console.log(error)
         }
       } catch (error) {
         
@@ -64,12 +83,12 @@ export default {
         const { data: leaves, error } = await supabase
         .from('leaves')
         .select('status')
-        .eq('user_id', userId.value)
+        .eq('department', department.value)
         .eq('status', 'Approved')
         approvedLeaves.value = leaves
         // console.log(approvedLeaves.value)
         if(error) {
-          // console.log(error)
+          console.log(error)
         }
       } catch (error) {
         
@@ -78,6 +97,7 @@ export default {
 
     onBeforeMount(() => {
       userId.value = supabase.auth.user().id
+      getHouDetails()
       all()
       pending()
       approved()
