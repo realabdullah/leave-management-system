@@ -60,6 +60,12 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: '/head-of-unit',
+    name: 'HOU',
+    component: () => import('../views/Hou.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/employees',
     name: 'Employee',
     component: () => import('../views/Employees.vue'),
