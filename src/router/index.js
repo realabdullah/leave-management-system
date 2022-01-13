@@ -5,22 +5,12 @@ import { ref } from 'vue'
 const userRoles = ref([])
 const userType = ref('')
 
-//auth guard
-const requireAuth = (to,from, next) => {
-  const user = supabase.auth.user()
-  if(user == null) {
-    // next({
-    //   path: '/login'
-    // })
-    router.push({
-      path: '/login'
-    })
-  } 
-  // else {
-  //   getRole()
-  //   next()
-  // }
-}
+// const user = supabase.auth.user()
+// if (user) {
+//   const isAuthenticated = true
+// } else {
+//   const isAuthenticated = false
+// }
 
 const getRole = async () => {
   const { data: user_roles, error } = await supabase
@@ -61,37 +51,36 @@ const routes = [
     path: '/admin',
     name: 'Admin',
     component: () => import('../views/Admin.vue'),
-    beforeEnter: requireAuth
+    meta: { requiresAuth: true }
   },
   {
     path: '/staff',
     name: 'Staff',
     component: () => import('../views/Staff.vue'),
-    beforeEnter: requireAuth
+    meta: { requiresAuth: true }
   },
   {
     path: '/employees',
     name: 'Employee',
     component: () => import('../views/Employees.vue'),
-    beforeEnter: requireAuth
   },
   {
     path: '/departments',
     name: 'Departments',
     component: () => import('../views/Departments.vue'),
-    beforeEnter: requireAuth
+    meta: { requiresAuth: true }
   },
   {
     path: '/leaves',
     name: 'Leaves',
     component: () => import('../views/Leaves.vue'),
-    beforeEnter: requireAuth
+    meta: { requiresAuth: true }
   },
   {
     path: '/apply-for-leave',
     name: 'Apply-for-leave',
     component: () => import('../views/LeaveApp.vue'),
-    beforeEnter: requireAuth
+    meta: { requiresAuth: true }
   },
   {
     path: '/user-requests',
@@ -110,9 +99,27 @@ const routes = [
   }
 ]
 
+
 const router = createRouter({
   history: createWebHashHistory(),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    const user = supabase.auth.user()
+    if (user) {
+      next({
+        name: 'Login'
+      })
+    } else {
+      await getRole()
+      next()
+    }
+  } else {
+    await getRole()
+    next()
+  }
 })
 
 export default router
