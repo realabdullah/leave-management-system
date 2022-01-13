@@ -56,13 +56,13 @@
                   <div class="text-sm text-gray-900">{{ leaves.to_date }}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <span v-if="leaves.status == 'Pending'" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-300 text-red-800">
+                  <span v-if="leaves.hou_status == 'Pending'" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-300 text-red-800">
                     {{ leaves.status }}
                   </span>
-                  <span v-if="leaves.status == 'Approved'" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                  <span v-if="leaves.hou_status == 'Approved'" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                     {{ leaves.status }}
                   </span>
-                  <span v-if="leaves.status == 'Declined'" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                  <span v-if="leaves.hou_status == 'Declined'" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
                     {{ leaves.status }}
                   </span>
                 </td>

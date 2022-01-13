@@ -220,7 +220,7 @@ export default {
         } else {
           // console.log(data)
           router.push({
-            path: '/leaves'
+            path: '/unit-leaves'
           })
           approving.value = false
         }
@@ -242,7 +242,7 @@ export default {
         } else {
           // console.log(data)
           router.push({
-            path: '/leaves'
+            path: '/unit-leaves'
           })
           rejecting.value = false
         }
