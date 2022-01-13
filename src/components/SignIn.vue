@@ -119,7 +119,7 @@ export default {
         } else {
           userM.value = user
           // console.log(userM.value)
-          getRole()
+          await getRole()
           loading.value = false
         }
       }
