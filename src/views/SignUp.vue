@@ -26,8 +26,8 @@
             <input v-model="email" id="email-address" name="email" type="email" autocomplete="email" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address" required/>
           </div>
           <div>
-            <label for="leave" class="sr-only">Leave Type</label>
-            <input v-model="leave" id="leave" name="leave" type="text" autocomplete="text" required="" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Leave Type" />
+            <label for="phone" class="sr-only">Phone</label>
+            <input v-model="phone" id="phone" name="phone" type="text" autocomplete="text" required="" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Phone" />
           </div>
           <div>
             <label for="gender" class="sr-only">Gender</label>
@@ -49,17 +49,17 @@
 
         <div class="flex items-center justify-between" v-if="errMsg">
           <div class="text-sm">
-            <p v-if="errMsg.code == '23505'" class="font-medium text-red-600 hover:text-red-500">
-              Name or Email has already been submitted.
+            <p class="font-medium text-red-600 hover:text-red-500">
+              {{ errMsg.details }}
             </p>
-            <p v-else class="font-medium text-red-600 hover:text-red-500">
+            <!-- <p v-else class="font-medium text-red-600 hover:text-red-500">
               {{ errMsg }}
-            </p>
+            </p> -->
           </div>
         </div>
 
         <div>
-          <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <button v-if="password.length > 5" type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
               <LockClosedIcon class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
             </span>
@@ -110,18 +110,9 @@
       <h3 class="mt-3 text-lg leading-6 font-medium text-gray-900">Success!</h3>
       <div class="mt-2 px-7 py-3">
         <p class="text-sm text-gray-500">
-          You'll receive an a confirmation link via the email you provided once the admin approves.
+          You'll receive a magic link to login via the email you provided once the admin approves.
         </p>
       </div>
-      <!-- <div class="items-center px-4 py-3">
-        <router-link to="/staff">
-          <button
-            class="px-4 py-2 text-white text-base font-medium rounded-md w-full shadow-sm bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          >            
-            Okay
-          </button>
-        </router-link>
-      </div> -->
     </div>
   </div>
 </template>
@@ -131,7 +122,6 @@ import { LockClosedIcon } from '@heroicons/vue/solid'
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { supabase } from '../supabase'
-import axios from 'axios'
 
 export default {
   components: {
@@ -142,7 +132,7 @@ export default {
 
     const fname = ref('')
     const email = ref('')
-    const leave = ref('')
+    const phone = ref('')
     const gender = ref('')
     const department = ref('')
     const status = ref('Pending')
@@ -151,53 +141,33 @@ export default {
     const loading = ref(false)
     const errMsg = ref('')
     const requested = ref(false)
-
-    const user = reactive({
-      name: '',
-      email: '',
-      leave: ''
-    })
-
-    // const store = reactive({
-    //   user: {}
-    // })
-
-    // const signUp = async () => {
-    //   try {
-    //     loading.value = true
-    //     const { user, error } = await supabase.auth.signUp(
-    //       {
-    //         email: email.value,
-    //         password: password.value
-    //       }
-    //     )
-    //     // console.log(user)
-    //     // userData.value = user
-    //     userId.value = user.id
-    //     await addData()   
-    //     router.push({
-    //       path: '/login'
-    //     })     
-    //     loading.value = false
-    //   }
-    //   catch(error) {
-    //     // console.log('Error signing up!')
-    //   }
-    // }
+    const passLength = password.value.length
     
     const requestSignup = async () => {
       try {
-        debugger
         loading.value = true
-        user.name = fname.value,
-        user.email = email.value,
-        user.leave = leave.value
-        console.log(user)
-
-        const response = await axios.post('http://localhost:4000/user', user);
-        console.log(response)
-        loading.value = false
-        
+        const { data, error } = await supabase
+        .from('preusers')
+        .insert([
+          {
+            name: fname.value, 
+            email: email.value, 
+            password: password.value,
+            phone: phone.value, 
+            gender: gender.value, 
+            department: department.value,
+            status: status.value
+          },
+        ])
+        if (error) {
+          console.log(error.details)
+          errMsg.value = error
+          loading.value = false
+          requested.value = false
+        } else {
+          loading.value = false
+          requested.value = true
+        }
       }
       catch (error) {
         // console.log(error)
@@ -207,12 +177,13 @@ export default {
     return {
       fname,
       email,
-      leave,
+      phone,
       gender,
       department,
       password,
       loading,
       errMsg,
+      passLength,
       // signUp
       requestSignup,
       requested
