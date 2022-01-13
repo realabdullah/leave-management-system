@@ -181,9 +181,10 @@
 <script>
 import AdminNav from '../components/AdminNav.vue'
 import { PaperClipIcon } from '@heroicons/vue/solid'
-import { ref, computed, onBeforeMount } from 'vue'
+import { ref, reactive, computed, onBeforeMount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { supabase } from '../supabase'
+import axios from 'axios'
 
 export default {
   components: {
@@ -197,6 +198,12 @@ export default {
     const leaveDetails = ref()
     const approving = ref(false)
     const rejecting = ref(false)
+    const user = reactive({
+      name: '',
+      email: '',
+      leave: '',
+      status: ''
+    })
 
     const getLeaveDetails = async () => {
       try {
@@ -215,6 +222,19 @@ export default {
       }
     }
 
+    const approvalMail = async () => {
+      try {
+        // debugger
+        user.name = leaveDetails.value[0].name,
+        user.email = leaveDetails.value[0].email,
+        user.leave = leaveDetails.value[0].leave_type,
+        user.status = leaveDetails.value[0].status
+        console.log(user)
+        const response = await axios.post(process.env.VUE_APP_HEROKU, user);
+        console.log(response)
+      } catch (error) {}
+    }
+
     const approve = async () => {
       try {      
         approving.value = true
@@ -227,6 +247,8 @@ export default {
           approving.value = false
         } else {
           // console.log(data)
+          await getLeaveDetails()
+          await approvalMail()
           router.push({
             path: '/leaves'
           })
@@ -249,6 +271,8 @@ export default {
           rejecting.value = false
         } else {
           // console.log(data)
+          await getLeaveDetails()
+          await approvalMail()
           router.push({
             path: '/leaves'
           })
