@@ -97,7 +97,7 @@ export default {
         houDetails.value = employees;
         department.value = houDetails.value[0].department
         if (error) {
-          console.log(error)
+          // console.log(error)
         } else {
           await all()
           // console.log(houDetails.value)
@@ -113,9 +113,9 @@ export default {
         .select('*')
         .eq('department', department.value)
         leaveData.value = leaves
-        console.log(leaveData.value)
+        // console.log(leaveData.value)
         if(error) {
-          console.log(error)
+          // console.log(error)
         }
       } catch (error) {
         

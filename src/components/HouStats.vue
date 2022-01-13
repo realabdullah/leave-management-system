@@ -37,7 +37,7 @@ export default {
         houDetails.value = employees;
         department.value = houDetails.value[0].department
         if (error) {
-          console.log(error)
+          // console.log(error)
         } else {
           await all()
           await pending()
@@ -55,7 +55,7 @@ export default {
         .select('*')
         .eq('department', department.value)
         allLeaves.value = leaves
-        console.log(allLeaves.value)
+        // console.log(allLeaves.value)
         if(error) {
           console.log(error)
         }
@@ -74,7 +74,7 @@ export default {
         pendingLeaves.value = leaves
         // console.log(pendingLeaves.value)
         if(error) {
-          console.log(error)
+          // console.log(error)
         }
       } catch (error) {
         
@@ -91,7 +91,7 @@ export default {
         approvedLeaves.value = leaves
         // console.log(approvedLeaves.value)
         if(error) {
-          console.log(error)
+          // console.log(error)
         }
       } catch (error) {
         
