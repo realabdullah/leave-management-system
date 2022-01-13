@@ -26,8 +26,8 @@
             <input v-model="email" id="email-address" name="email" type="email" autocomplete="email" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address" required/>
           </div>
           <div>
-            <label for="phone" class="sr-only">Phone Number</label>
-            <input v-model="phone" id="phone" name="email" type="telephone" autocomplete="telephone" required="" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Phone Number" />
+            <label for="leave" class="sr-only">Leave Type</label>
+            <input v-model="leave" id="leave" name="leave" type="text" autocomplete="text" required="" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Leave Type" />
           </div>
           <div>
             <label for="gender" class="sr-only">Gender</label>
@@ -128,10 +128,10 @@
 
 <script>
 import { LockClosedIcon } from '@heroicons/vue/solid'
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { supabase } from '../supabase'
-// import { reactive } from "vue"
+import axios from 'axios'
 
 export default {
   components: {
@@ -142,7 +142,7 @@ export default {
 
     const fname = ref('')
     const email = ref('')
-    const phone = ref('')
+    const leave = ref('')
     const gender = ref('')
     const department = ref('')
     const status = ref('Pending')
@@ -151,6 +151,12 @@ export default {
     const loading = ref(false)
     const errMsg = ref('')
     const requested = ref(false)
+
+    const user = reactive({
+      name: '',
+      email: '',
+      leave: ''
+    })
 
     // const store = reactive({
     //   user: {}
@@ -181,28 +187,17 @@ export default {
     
     const requestSignup = async () => {
       try {
+        debugger
         loading.value = true
-        const { data, error } = await supabase
-        .from('preusers')
-        .insert([
-          {
-            name: fname.value, 
-            email: email.value, 
-            password: password.value,
-            phone: phone.value, 
-            gender: gender.value, 
-            department: department.value,
-            status: status.value
-          },
-        ])
-        if (error) {
-          errMsg.value = error
-          loading.value = false
-          requested.value = false
-        } else {
-          loading.value = false
-          requested.value = true
-        }
+        user.name = fname.value,
+        user.email = email.value,
+        user.leave = leave.value
+        console.log(user)
+
+        const response = await axios.post('http://localhost:4000/user', user);
+        console.log(response)
+        loading.value = false
+        
       }
       catch (error) {
         // console.log(error)
@@ -212,7 +207,7 @@ export default {
     return {
       fname,
       email,
-      phone,
+      leave,
       gender,
       department,
       password,

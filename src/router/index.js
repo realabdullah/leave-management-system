@@ -9,13 +9,17 @@ const userType = ref('')
 const requireAuth = (to,from, next) => {
   const user = supabase.auth.user()
   if(user == null) {
-    next({
+    // next({
+    //   path: '/login'
+    // })
+    router.push({
       path: '/login'
     })
-  } else {
-    getRole()
-    next()
-  }
+  } 
+  // else {
+  //   getRole()
+  //   next()
+  // }
 }
 
 const getRole = async () => {
