@@ -14,17 +14,17 @@
         </div>
         <div class="hidden md:block">
           <div class="ml-4 flex items-center md:ml-6">
-            <button type="button" class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+            <!-- <button type="button" class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
               <span class="sr-only">View notifications</span>
               <BellIcon class="h-6 w-6" aria-hidden="true" />
-            </button>
+            </button> -->
 
             <!-- Profile dropdown -->
             <Menu as="div" class="ml-3 relative">
               <div>
                 <MenuButton class="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                   <span class="sr-only">Open user menu</span>
-                  <img class="h-8 w-8 rounded-full" :src="user.imageUrl" alt="" />
+                  <!-- <img class="h-8 w-8 rounded-full" :src="user.imageUrl" alt="" /> -->
                 </MenuButton>
               </div>
               <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
@@ -55,17 +55,17 @@
       </div>
       <div class="pt-4 pb-3 border-t border-gray-700">
         <div class="flex items-center px-5">
-          <div class="flex-shrink-0">
+          <!-- <div class="flex-shrink-0">
             <img class="h-10 w-10 rounded-full" :src="user.imageUrl" alt="" />
-          </div>
+          </div> -->
           <div class="ml-3">
             <div class="text-base font-medium leading-none text-white">{{ user.name }}</div>
             <div class="text-sm font-medium leading-none text-gray-400">{{ user.email }}</div>
           </div>
-          <button type="button" class="ml-auto bg-gray-800 flex-shrink-0 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+          <!-- <button type="button" class="ml-auto bg-gray-800 flex-shrink-0 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
             <span class="sr-only">View notifications</span>
             <BellIcon class="h-6 w-6" aria-hidden="true" />
-          </button>
+          </button> -->
         </div>
         <div class="mt-3 px-2 space-y-1">
           <DisclosureButton v-for="item in userNavigation" :key="item.name" as="a" class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">
@@ -92,9 +92,7 @@ import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline'
 
 const user = {
   name: 'Tom Cook',
-  email: 'tom@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  email: 'tom@example.com'
 }
 const navigation = [
   { name: 'Dashboard', href: '/admin', current: false },
@@ -103,9 +101,7 @@ const navigation = [
   { name: 'Requests', href: '/user-requests', current: false }
 ]
 const userNavigation = [
-  { name: 'Your Profile', href: '#', function: '' },
-  { name: 'Settings', href: '#', function: '' },
-  { name: 'Sign out', function: 'logOut' },
+  { name: 'Sign out', function: 'logOut' }
 ]
 
 export default {

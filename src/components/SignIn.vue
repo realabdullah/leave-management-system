@@ -9,7 +9,7 @@
         <p class="mt-2 text-center text-sm text-gray-600">
           Don't have an account?
           {{ ' ' }}
-          <a href="/#/signup" class="font-medium text-indigo-600 hover:text-indigo-500">
+          <a href="/signup" class="font-medium text-indigo-600 hover:text-indigo-500">
             Create one now.
           </a>
         </p>
