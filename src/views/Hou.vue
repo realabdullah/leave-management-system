@@ -1,18 +1,18 @@
 <template>
   <div class="min-h-full">
     <HouNav />
-    <StaffOverview />
+    <HouOverview />
   </div>
 </template>
 
 <script>
 import HouNav from '../components/HouNav.vue'
-import StaffOverview from '../components/StaffOverview.vue'
+import HouOverview from '../components/HouOverview.vue'
 
 export default {
   components: {
     HouNav,
-    StaffOverview
+    HouOverview
   }
 }
 </script>
