@@ -39,6 +39,9 @@ export default {
         if (error) {
           console.log(error)
         } else {
+          await all()
+          await pending()
+          await approved()
           // console.log(houDetails.value)
           // console.log(department.value)
         }
@@ -98,9 +101,6 @@ export default {
     onBeforeMount(() => {
       userId.value = supabase.auth.user().id
       getHouDetails()
-      all()
-      pending()
-      approved()
     })
 
     return {

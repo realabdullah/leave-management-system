@@ -9,7 +9,7 @@
       <!-- Replace with your content -->
       <HouStats />
       <HouLeaves />
-      <StaffProfile />
+      <HouProfile />
       <!-- /End replace -->
     </div>
   </main>
@@ -18,13 +18,13 @@
 <script>
 import HouStats from "../components/HouStats.vue";
 import HouLeaves from "../components/HouLeaves.vue";
-import StaffProfile from "../components/StaffProfile.vue";
+import HouProfile from "../components/HouProfile.vue";
 
 export default {
   components: {
     HouStats,
     HouLeaves,
-    StaffProfile,
+    HouProfile,
   },
 };
 </script>
