@@ -51,17 +51,10 @@
       </div>
       <div class="pt-4 pb-3 border-t border-gray-700">
         <div class="flex items-center px-5">
-          <div class="flex-shrink-0">
-            <img class="h-10 w-10 rounded-full" :src="user.imageUrl" alt="" />
-          </div>
           <div class="ml-3">
             <div class="text-base font-medium leading-none text-white">{{ userInfo.name }}</div>
             <div class="text-sm font-medium leading-none text-gray-400">{{ userInfo.email }}</div>
           </div>
-          <button type="button" class="ml-auto bg-gray-800 flex-shrink-0 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-            <span class="sr-only">View notifications</span>
-            <BellIcon class="h-6 w-6" aria-hidden="true" />
-          </button>
         </div>
         <div class="mt-3 px-2 space-y-1">
           <DisclosureButton v-for="item in userNavigation" :key="item.name" as="a" class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">
@@ -86,14 +79,14 @@ import { supabase } from '../supabase'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline'
 
-const user = {
-  name: 'Tom Cook',
-  email: 'tom@example.com',
-  imageUrl:
-    'https://source.unsplash.com/MP0IUfwrn0A',
-}
+// const user = {
+//   name: 'Tom Cook',
+//   email: 'tom@example.com',
+//   imageUrl:
+//     'https://source.unsplash.com/MP0IUfwrn0A',
+// }
 const navigation = [
-  { name: 'Dashboard', href: '/staff', current: false }
+  { name: 'Dashboard', href: '/head-of-unit', current: false }
 ]
 const userNavigation = [
   // { name: 'Your Profile', href: '#', function: '' },
@@ -137,7 +130,6 @@ export default {
 
     return {
       logOut,
-      user,
       navigation,
       userNavigation,
       userInfo
