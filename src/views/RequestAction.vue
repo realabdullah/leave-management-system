@@ -264,7 +264,7 @@ export default {
           email: email.value
         });
         if (error) {
-          console.log(error)
+          // console.log(error)
         }
       } catch (error) {}
     };
@@ -295,11 +295,11 @@ export default {
           .update({ status: "Approved" })
           .eq("id", userId.value);
         if (error) {
-          console.log(error)
+          // console.log(error)
           approving.value = false;
         } else {
           await signUp();
-          console.log(data)
+          // console.log(data)
           approving.value = false;
         }
       } catch (error) {}
