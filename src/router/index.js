@@ -85,17 +85,20 @@ const routes = [
   {
     path: '/user-requests',
     name: 'User-requests',
-    component: () => import('../views/UserRequests.vue')
+    component: () => import('../views/UserRequests.vue'),
+    meta: { requiresAuth: true }
   },
   {
     path: '/leave-action/:id',
     name: 'Leave-action',
-    component: () => import('../views/LeaveAction.vue')
+    component: () => import('../views/LeaveAction.vue'),
+    meta: { requiresAuth: true }
   },
   {
     path: '/request-action/:id',
     name: 'Request-action',
-    component: () => import('../views/RequestAction.vue')
+    component: () => import('../views/RequestAction.vue'),
+    meta: { requiresAuth: true }
   }
 ]
 
