@@ -70,7 +70,7 @@
                   Dec, 15
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                  <router-link :to="`/leave-action/${leaves.id}`" class="text-indigo-600 hover:text-indigo-900">View</router-link>
+                  <router-link :to="`/hou-leave-action/${leaves.id}`" class="text-indigo-600 hover:text-indigo-900">View</router-link>
                 </td>
               </tr>
 

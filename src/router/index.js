@@ -107,6 +107,12 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: '/hou-leave-action/:id',
+    name: 'HOU Leave Action',
+    component: () => import('../views/HouAction.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/request-action/:id',
     name: 'Request-action',
     component: () => import('../views/RequestAction.vue'),
