@@ -87,18 +87,38 @@ import { supabase } from '../supabase'
 export default {
   setup () {
     const leaveData = ref([])
+    const houDetails = ref([])
     const userId = ref('')
+    const department = ref('')
 
-    const getLeaveData = async () => {
+    const getHouDetails = async () => {
+      try {
+        const { data: employees, error } = await supabase
+        .from("employees")
+        .select("*")
+        .eq("employee_id", userId.value);
+        houDetails.value = employees;
+        department.value = houDetails.value[0].department
+        if (error) {
+          console.log(error)
+        } else {
+          // await all()
+          // console.log(houDetails.value)
+          // console.log(department.value)
+        }
+      } catch (error) {}
+    }
+
+    const all = async () => {
       try {
         const { data: leaves, error } = await supabase
         .from('leaves')
         .select('*')
-        .eq('user_id', userId.value)
+        .eq('department', department.value)
         leaveData.value = leaves
-        // console.log(leaveData.value)
+        console.log(leaveData.value)
         if(error) {
-          // console.log(error)
+          console.log(error)
         }
       } catch (error) {
         
@@ -107,7 +127,7 @@ export default {
 
     onBeforeMount(() => {
       userId.value = supabase.auth.user().id
-      getLeaveData()
+      getHouDetails()
     })
 
     return {

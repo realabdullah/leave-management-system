@@ -7,8 +7,8 @@
   <main>
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
       <!-- Replace with your content -->
-      <houStats />
-      <StaffLeaves />
+      <HouStats />
+      <HouLeaves />
       <StaffProfile />
       <!-- /End replace -->
     </div>
@@ -16,14 +16,14 @@
 </template>
 
 <script>
-import houStats from "../components/HouStats.vue";
-import StaffLeaves from "../components/StaffLeaves.vue";
+import HouStats from "../components/HouStats.vue";
+import HouLeaves from "../components/HouLeaves.vue";
 import StaffProfile from "../components/StaffProfile.vue";
 
 export default {
   components: {
-    houStats,
-    StaffLeaves,
+    HouStats,
+    HouLeaves,
     StaffProfile,
   },
 };
