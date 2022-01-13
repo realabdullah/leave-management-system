@@ -87,7 +87,7 @@ import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline'
 // }
 const navigation = [
   { name: 'Dashboard', href: '/head-of-unit', current: false },
-  { name: 'Leaves', href: '/leaves', current: false }
+  { name: 'Leaves', href: '/unit-leaves', current: false }
 ]
 const userNavigation = [
   // { name: 'Your Profile', href: '#', function: '' },
