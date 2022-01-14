@@ -50,7 +50,7 @@
                   <div class="text-sm text-gray-900">{{ leaves.leave_type }}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="text-sm text-gray-900">{{ leaves.date_applied }}</div>
+                  <div class="text-sm text-gray-900"> {{ dateTime(leaves.date_applied) }}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="text-sm text-gray-900">{{ leaves.from_date }}</div>
@@ -99,7 +99,8 @@
 
 <script>
 import { ref, onBeforeMount } from 'vue'
-import { supabase } from '../supabase'
+import { supabase } from '@/supabase'
+import moment from 'moment'
 
 export default {
   setup () {
@@ -120,12 +121,17 @@ export default {
       }
     }
 
+    function dateTime(value) {
+      return moment(value).format('llll')
+    }
+
     onBeforeMount(() => {
       getAllLeaves()
     })
 
     return {
-      allLeaves
+      allLeaves,
+      dateTime
     }
   }
 }
