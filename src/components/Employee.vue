@@ -37,7 +37,7 @@
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {{ employee.created_at }}
+                  {{ dateTime(employee.created_at) }}
                 </td>
               </tr>
 
@@ -52,7 +52,8 @@
 
 <script>
 import { ref, onBeforeMount } from 'vue'
-import { supabase } from '../supabase'
+import { supabase } from '@/supabase'
+import moment from 'moment'
 
 export default {
   setup () {
@@ -74,7 +75,9 @@ export default {
       }
     }
 
-    
+    function dateTime(value) {
+      return moment(value).format('llll')
+    }
 
     onBeforeMount(() => {
       getEmployees()
@@ -83,7 +86,8 @@ export default {
     })
 
     return {
-      employeesData
+      employeesData,
+      dateTime
     }
   }
 }
