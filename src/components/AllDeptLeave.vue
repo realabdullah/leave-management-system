@@ -47,7 +47,7 @@
                   <div class="text-sm text-gray-900">{{ leaves.leave_type }}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="text-sm text-gray-900">{{ leaves.date_applied }}</div>
+                  <div class="text-sm text-gray-900">{{ dateTime(leaves.date_applied) }}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="text-sm text-gray-900">{{ leaves.from_date }}</div>
@@ -66,9 +66,6 @@
                     {{ leaves.hou_status }}
                   </span>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  Dec, 15
-                </td>
                 <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                   <router-link :to="`/hou-leave-action/${leaves.id}`" class="text-indigo-600 hover:text-indigo-900">View</router-link>
                 </td>
@@ -85,7 +82,8 @@
 
 <script>
 import { ref, onBeforeMount } from 'vue'
-import { supabase } from '../supabase'
+import { supabase } from '@/supabase'
+import moment from 'moment'
 
 export default {
   setup () {
@@ -130,13 +128,18 @@ export default {
       }
     }
 
+    function dateTime(value) {
+      return moment(value).format('llll')
+    }
+
     onBeforeMount(() => {
       houId.value = supabase.auth.user().id
       getHou()
     })
 
     return {
-      allLeaves
+      allLeaves,
+      dateTime
     }
   }
 }
