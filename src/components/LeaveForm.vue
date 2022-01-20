@@ -1,5 +1,8 @@
 <template>
-  <form @submit.prevent="addLeave" v-if="!applied">
+  <div v-if="loaded" class="wrapper">
+    <span class="loader"><span class="loader-inner"></span></span>
+  </div>
+  <form @submit.prevent="addLeave" v-if="!applied && !loaded">
     <div class="mt-10 sm:mt-0">
       <div class="md:grid md:grid-cols-3 md:gap-6">
         <div class="md:col-span-1">
@@ -192,6 +195,7 @@ export default {
     const leaveTo = ref('')
     const status = ref('Pending')
     const loading = ref(false)
+    const loaded = ref(false)
     const applied = ref(false)
 
     const getStaffData = async () => {
@@ -207,7 +211,7 @@ export default {
         if(error) {
           // console.log(error)
         } else {
-          //
+          loaded.value = false
         }
       }
       catch(error) {
@@ -251,12 +255,14 @@ export default {
     }
 
     onBeforeMount(() => {
+      loaded.value = true
       userId.value = supabase.auth.user().id
       // console.log(userId.value)
       getStaffData()
     })
 
     return {
+      loaded,
       staffName,
       email,
       department,
