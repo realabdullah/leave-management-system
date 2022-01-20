@@ -1,5 +1,8 @@
 <template>
-  <div class="flex flex-col">
+  <div v-if="loading" class="wrapper">
+    <span class="loader"><span class="loader-inner"></span></span>
+  </div>
+  <div v-else class="flex flex-col">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -91,6 +94,7 @@ export default {
     const houData = ref([])
     const houId = ref('')
     const department = ref('')
+    const loading = ref(false)
 
     const getHou = async () => {
       try {
@@ -104,6 +108,7 @@ export default {
           // console.log(error)
         } else {
           await getAllLeaves()
+          loading.value = false
           // console.log(staffData.value)
         }
       }
@@ -133,11 +138,13 @@ export default {
     }
 
     onBeforeMount(() => {
+      loading.value = true
       houId.value = supabase.auth.user().id
       getHou()
     })
 
     return {
+      loading,
       allLeaves,
       dateTime
     }

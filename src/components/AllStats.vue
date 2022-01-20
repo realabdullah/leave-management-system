@@ -1,5 +1,8 @@
 <template>
-  <div class="card-pack">
+  <div v-if="loading" class="wrapper">
+    <span class="loader"><span class="loader-inner"></span></span>
+  </div>
+  <div v-else class="card-pack">
     <div class="hc-card">
       <p>All Leaves</p>
       <h1>{{ allLeaves.length }}</h1>
@@ -25,12 +28,14 @@ export default {
     const approvedLeaves = ref([])
     const pendingLeaves = ref([])
     const userId = ref('')
+    const loading = ref(false)
 
     const getStat = async () => {
       try {
         await all()
         await pending()
         await approved()
+        loading.value = false
       } catch (error) {}
     }
 
@@ -82,11 +87,13 @@ export default {
     }
 
     onBeforeMount(() => {
+      loading.value = true
       userId.value = supabase.auth.user().id
       getStat()
     })
 
     return {
+      loading,
       allLeaves,
       pendingLeaves,
       approvedLeaves
