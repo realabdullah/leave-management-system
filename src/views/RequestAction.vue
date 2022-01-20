@@ -223,9 +223,10 @@ export default {
     const email = ref("");
     const password = ref('')
     const newId = ref('')
-    const
+    const loading = ref(false)
 
     const getRequestDetails = async () => {
+      loading.value = true
       try {
         const { data: preusers, error } = await supabase
           .from("preusers")
@@ -238,6 +239,7 @@ export default {
           // console.log(error)
         } else {
           // console.log(requestDetails.value)
+          loading.value = false
         }
       } catch (error) {}
     }
@@ -334,6 +336,7 @@ export default {
     });
 
     return {
+      loading,
       requestDetails,
       approve,
       reject,
