@@ -58,6 +58,7 @@ import moment from 'moment'
 export default {
   setup () {
     const employeesData = ref([])
+    const loading = ref(false)
 
     const getEmployees = async () => {
       try {
@@ -68,6 +69,8 @@ export default {
         // console.log(employeesData.value)
         if (error) {
           // console.log(error)
+        } else {
+          loading.value = false
         }
       }
       catch (error) {
@@ -80,12 +83,14 @@ export default {
     }
 
     onBeforeMount(() => {
+      loading.value = true
       getEmployees()
       const user = supabase.auth.user()
       // console.log(user)
     })
 
     return {
+      loading,
       employeesData,
       dateTime
     }
