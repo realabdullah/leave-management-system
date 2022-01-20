@@ -11,13 +11,13 @@
         <p class="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start">{{ profile.email }}</p>
         <p class="pt-8 text-sm">Totally optional short description about yourself, what you do and so on.</p>
 
-        <div class="pt-12 pb-8">
-          <button class="bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white font-bold py-2 px-4 rounded-full">
-            <router-link to="apply-for-leave">
-              Apply for leave
-            </router-link>
-          </button> 
-        </div>
+<!--        <div class="pt-12 pb-8">-->
+<!--          <button class="bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white font-bold py-2 px-4 rounded-full">-->
+<!--            <router-link to="apply-for-leave">-->
+<!--              Apply for leave-->
+<!--            </router-link>-->
+<!--          </button> -->
+<!--        </div>-->
       </div>
     </div>
   </div>
