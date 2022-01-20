@@ -174,7 +174,6 @@
 </template>
 
 <script>
-import HouNav from '../components/HouNav.vue'
 import { PaperClipIcon } from '@heroicons/vue/solid'
 import { ref, computed, onBeforeMount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
