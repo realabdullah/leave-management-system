@@ -1,5 +1,8 @@
 <template>
-  <div class="card-pack">
+  <div v-if="loading" class="wrapper">
+    <span class="loader"><span class="loader-inner"></span></span>
+  </div>
+  <div v-else class="card-pack">
     <div class="hc-card">
       <p>All Leaves</p>
       <h1>{{ allLeaves.length }}</h1>
@@ -27,8 +30,10 @@ export default {
     const pendingLeaves = ref([])
     const userId = ref('')
     const department = ref('')
+    const loading = ref(false)
 
     const getHouDetails = async () => {
+      loading.value = true
       try {
         const { data: employees, error } = await supabase
         .from("employees")
@@ -42,6 +47,7 @@ export default {
           await all()
           await pending()
           await approved()
+          loading.value = false
           // console.log(houDetails.value)
           // console.log(department.value)
         }
@@ -104,6 +110,7 @@ export default {
     })
 
     return {
+      loading,
       allLeaves,
       pendingLeaves,
       approvedLeaves

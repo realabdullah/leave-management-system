@@ -1,7 +1,7 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
   <div class="min-h-full">
-    <AdminNav />
+    <HouNav />
     <div v-if="loading" class="wrapper">
       <span class="loader"><span class="loader-inner"></span></span>
     </div>
@@ -174,15 +174,16 @@
 </template>
 
 <script>
-import AdminNav from '../components/AdminNav.vue'
+import HouNav from '../components/HouNav.vue'
 import { PaperClipIcon } from '@heroicons/vue/solid'
 import { ref, computed, onBeforeMount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { supabase } from '../supabase'
+import HouNav from "../components/HouNav";
 
 export default {
   components: {
-    AdminNav,
+    HouNav,
     PaperClipIcon
   },
   setup () {

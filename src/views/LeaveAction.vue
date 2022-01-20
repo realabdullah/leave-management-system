@@ -2,7 +2,10 @@
 <template>
   <div class="min-h-full">
     <AdminNav />
-    <div class="bg-white m-5 shadow overflow-hidden sm:rounded-lg">
+    <div v-if="loading" class="wrapper">
+      <span class="loader"><span class="loader-inner"></span></span>
+    </div>
+    <div v-else class="bg-white m-5 shadow overflow-hidden sm:rounded-lg">
       <div class="px-4 py-5 sm:px-6">
         <h3 class="text-lg leading-6 font-medium text-gray-900">
           Leave Information
@@ -196,6 +199,7 @@ export default {
     const router = useRouter()
     const userId = computed(() => route.params.id)
     const leaveDetails = ref()
+    const loading = ref(false)
     const approving = ref(false)
     const rejecting = ref(false)
     const user = reactive({
@@ -206,6 +210,7 @@ export default {
     })
 
     const getLeaveDetails = async () => {
+      loading.value = true
       try {
         const { data: leaves, error } = await supabase
         .from('leaves')
@@ -216,6 +221,7 @@ export default {
           // console.log(error)
         } else {
           // console.log(leaveDetails.value)
+          loading.value = false
         }
       } catch (error) {
         
@@ -288,6 +294,7 @@ export default {
     })
 
     return {
+      loading,
       leaveDetails,
       approve,
       reject,
