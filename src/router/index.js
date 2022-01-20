@@ -5,13 +5,6 @@ import { ref } from 'vue'
 const userRoles = ref([])
 const userType = ref('')
 
-// const user = supabase.auth.user()
-// if (user) {
-//   const isAuthenticated = true
-// } else {
-//   const isAuthenticated = false
-// }
-
 const getRole = async () => {
   const { data: user_roles, error } = await supabase
   .from('user_roles')
@@ -19,8 +12,8 @@ const getRole = async () => {
   userRoles.value = user_roles
   userType.value = userRoles.value[0].role
   // console.log(userType.value)
-  if(userType.value == 'staff') {
-    router.push({
+  if(userType.value === 'staff') {
+    await router.push({
       path: '/staff'
     })
   }
@@ -92,7 +85,6 @@ const routes = [
     path: '/apply-for-leave',
     name: 'Apply-for-leave',
     component: () => import('../views/LeaveApp.vue'),
-    // meta: { requiresAuth: true }
   },
   {
     path: '/user-requests',
@@ -134,11 +126,11 @@ router.beforeEach((to, from, next) => {
         name: 'Login'
       })
     } else {
-      getRole()
+      getRole().then(r => {})
       next()
     }
   } else {
-    getRole()
+    getRole().then(r => {})
     next()
   }
 })

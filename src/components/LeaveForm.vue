@@ -2,148 +2,150 @@
   <div v-if="loaded" class="wrapper">
     <span class="loader"><span class="loader-inner"></span></span>
   </div>
-  <form @submit.prevent="addLeave" v-if="!applied && !loaded">
-    <div class="mt-10 sm:mt-0">
-      <div class="md:grid md:grid-cols-3 md:gap-6">
-        <div class="md:col-span-1">
-          <div class="px-4 sm:px-0">
-            <h3 class="text-lg font-medium leading-6 text-gray-900">Personal Information</h3>
-            <p class="mt-1 text-sm text-gray-600">
-              Use a permanent address where you can receive mail.
-            </p>
+  <div v-if="!applied && !loaded">
+    <form @submit.prevent="addLeave">
+      <div class="mt-10 sm:mt-0">
+        <div class="md:grid md:grid-cols-3 md:gap-6">
+          <div class="md:col-span-1">
+            <div class="px-4 sm:px-0">
+              <h3 class="text-lg font-medium leading-6 text-gray-900">Personal Information</h3>
+              <p class="mt-1 text-sm text-gray-600">
+                Use a permanent address where you can receive mail.
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="mt-5 md:mt-0 md:col-span-2">
-          <div class="shadow overflow-hidden sm:rounded-md">
-            <div class="px-4 py-5 bg-white sm:p-6">
-              <div class="grid grid-cols-6 gap-6">
-                <div class="col-span-6 sm:col-span-3">
-                  <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
-                  <input v-model="staffName" type="text" name="name" id="name" autocomplete="given-name" class="mt-1 px-3 py-2 border focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" disabled/>
-                </div>
+          <div class="mt-5 md:mt-0 md:col-span-2">
+            <div class="shadow overflow-hidden sm:rounded-md">
+              <div class="px-4 py-5 bg-white sm:p-6">
+                <div class="grid grid-cols-6 gap-6">
+                  <div class="col-span-6 sm:col-span-3">
+                    <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                    <input v-model="staffName" type="text" name="name" id="name" autocomplete="given-name" class="mt-1 px-3 py-2 border focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" disabled/>
+                  </div>
 
-                <div class="col-span-6 sm:col-span-3">
-                  <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
-                  <input v-model="email" type="email" name="email" id="email" autocomplete="family-name" class="mt-1 px-3 py-2 border focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required/>
-                </div>
+                  <div class="col-span-6 sm:col-span-3">
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                    <input v-model="email" type="email" name="email" id="email" autocomplete="family-name" class="mt-1 px-3 py-2 border focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required/>
+                  </div>
 
-                <div class="col-span-6 sm:col-span-4">
-                  <label for="department" class="block text-sm font-medium text-gray-700">Department</label>
-                  <input v-model="department" type="text" name="department" id="department" autocomplete="department" class="mt-1 px-3 py-2 border focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" disabled/>
-                </div>
+                  <div class="col-span-6 sm:col-span-4">
+                    <label for="department" class="block text-sm font-medium text-gray-700">Department</label>
+                    <input v-model="department" type="text" name="department" id="department" autocomplete="department" class="mt-1 px-3 py-2 border focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" disabled/>
+                  </div>
 
-                <div class="col-span-6 sm:col-span-3">
-                  <label for="marital-status" class="block text-sm font-medium text-gray-700">Marital Status</label>
-                  <select v-model="maritalStatus" id="marital-status" name="marital-status" autocomplete="status" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
-                    <option value=""></option>
-                    <option value="Single">Single</option>
-                    <option value="Married">Married</option>
-                    <option value="Divorced">Divorced</option>
-                  </select>
+                  <div class="col-span-6 sm:col-span-3">
+                    <label for="marital-status" class="block text-sm font-medium text-gray-700">Marital Status</label>
+                    <select v-model="maritalStatus" id="marital-status" name="marital-status" autocomplete="status" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                      <option value=""></option>
+                      <option value="Single">Single</option>
+                      <option value="Married">Married</option>
+                      <option value="Divorced">Divorced</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="hidden sm:block" aria-hidden="true">
-      <div class="py-5">
-        <div class="border-t border-gray-200" />
-      </div>
-    </div>
-
-    <div class="mt-10 sm:mt-0">
-      <div class="md:grid md:grid-cols-3 md:gap-6">
-        <div class="md:col-span-1">
-          <div class="px-4 sm:px-0">
-            <h3 class="text-lg font-medium leading-6 text-gray-900">Leave Details</h3>
-            <p class="mt-1 text-sm text-gray-600">
-              Information on the last leave you took and one you're about to take.
-            </p>
-          </div>
+      <div class="hidden sm:block" aria-hidden="true">
+        <div class="py-5">
+          <div class="border-t border-gray-200" />
         </div>
-        <div class="mt-5 md:mt-0 md:col-span-2">
-          <div class="shadow overflow-hidden sm:rounded-md">
-            <div class="px-4 py-5 bg-white sm:p-6">
-              <div class="grid gap-6">
-                <div class="col-span-6">
-                  <label for="last-leave" class="block text-sm font-medium text-gray-700">Last Leave Date</label>
-                  <input v-model="lastLeavedate" type="date" name="last-leave" id="last-leave" class="mt-1 px-3 py-2 border focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required/>
-                </div>
+      </div>
 
-                <div class="col-span-6 sm:col-span-3">
-                  <label for="leave-type" class="block text-sm font-medium text-gray-700">Last Leave Type</label>
-                  <select v-model="lastLeaveType" id="leave-type" name="leave-type" autocomplete="leave" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
-                    <option value=""></option>
-                    <option value="Annual Leave">Annual Leave</option>
-                    <option value="Paternity Leave">Paternity Leave</option>
-                    <option value="Maternity Leave">Maternity Leave</option>
-                  </select>
-                </div>
+      <div class="mt-10 sm:mt-0">
+        <div class="md:grid md:grid-cols-3 md:gap-6">
+          <div class="md:col-span-1">
+            <div class="px-4 sm:px-0">
+              <h3 class="text-lg font-medium leading-6 text-gray-900">Leave Details</h3>
+              <p class="mt-1 text-sm text-gray-600">
+                Information on the last leave you took and one you're about to take.
+              </p>
+            </div>
+          </div>
+          <div class="mt-5 md:mt-0 md:col-span-2">
+            <div class="shadow overflow-hidden sm:rounded-md">
+              <div class="px-4 py-5 bg-white sm:p-6">
+                <div class="grid gap-6">
+                  <div class="col-span-6">
+                    <label for="last-leave" class="block text-sm font-medium text-gray-700">Last Leave Date</label>
+                    <input v-model="lastLeavedate" type="date" name="last-leave" id="last-leave" class="mt-1 px-3 py-2 border focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required/>
+                  </div>
 
-                <div class="col-span-6 sm:col-span-3">
-                  <label for="leave-type" class="block text-sm font-medium text-gray-700">Leave Type (Now)</label>
-                  <select v-model="leaveType" id="leave-type" name="leave-type" autocomplete="leave" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
-                    <option value=""></option>
-                    <option value="Annual Leave">Annual Leave</option>
-                    <option value="Paternity Leave">Paternity Leave</option>
-                    <option value="Maternity Leave">Maternity Leave</option>
-                  </select>
-                </div>
+                  <div class="col-span-6 sm:col-span-3">
+                    <label for="leave-type" class="block text-sm font-medium text-gray-700">Last Leave Type</label>
+                    <select v-model="lastLeaveType" id="leave-type" name="leave-type" autocomplete="leave" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                      <option value=""></option>
+                      <option value="Annual Leave">Annual Leave</option>
+                      <option value="Paternity Leave">Paternity Leave</option>
+                      <option value="Maternity Leave">Maternity Leave</option>
+                    </select>
+                  </div>
 
-                <div class="col-span-6">
-                  <label for="from-date" class="block text-sm font-medium text-gray-700">From</label>
-                  <input v-model="leaveFrom" type="date" name="from-date" id="from-date" class="mt-1 px-3 py-2 border focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required/>
-                </div>
+                  <div class="col-span-6 sm:col-span-3">
+                    <label for="leave-type" class="block text-sm font-medium text-gray-700">Leave Type (Now)</label>
+                    <select v-model="leaveType" id="leave-type" name="leave-type" autocomplete="leave" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                      <option value=""></option>
+                      <option value="Annual Leave">Annual Leave</option>
+                      <option value="Paternity Leave">Paternity Leave</option>
+                      <option value="Maternity Leave">Maternity Leave</option>
+                    </select>
+                  </div>
 
-                <div class="col-span-6">
-                  <label for="to-date" class="block text-sm font-medium text-gray-700">To</label>
-                  <input v-model="leaveTo" type="date" name="to-date" id="to-date" class="mt-1 px-3 py-2 border focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required/>
-                </div>
+                  <div class="col-span-6">
+                    <label for="from-date" class="block text-sm font-medium text-gray-700">From</label>
+                    <input v-model="leaveFrom" type="date" name="from-date" id="from-date" class="mt-1 px-3 py-2 border focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required/>
+                  </div>
 
-                <div>
-                  <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    <div v-if="!loading">Apply</div>
-                    <div class="svg" v-else>
-                      <svg version="1.1" id="L4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                      viewBox="0 0 100 100" enable-background="new 0 0 0 0" xml:space="preserve">
-                        <circle fill="#fff" stroke="none" cx="6" cy="50" r="6">
-                          <animate
-                            attributeName="opacity"
-                            dur="1s"
-                            values="0;1;0"
-                            repeatCount="indefinite"
-                            begin="0.1"/>    
-                        </circle>
-                        <circle fill="#fff" stroke="none" cx="26" cy="50" r="6">
-                          <animate
-                            attributeName="opacity"
-                            dur="1s"
-                            values="0;1;0"
-                            repeatCount="indefinite" 
-                            begin="0.2"/>       
-                        </circle>
-                        <circle fill="#fff" stroke="none" cx="46" cy="50" r="6">
-                          <animate
-                            attributeName="opacity"
-                            dur="1s"
-                            values="0;1;0"
-                            repeatCount="indefinite" 
-                            begin="0.3"/>     
-                        </circle>
-                      </svg>
-                    </div>
-                  </button>
+                  <div class="col-span-6">
+                    <label for="to-date" class="block text-sm font-medium text-gray-700">To</label>
+                    <input v-model="leaveTo" type="date" name="to-date" id="to-date" class="mt-1 px-3 py-2 border focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required/>
+                  </div>
+
+                  <div>
+                    <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                      <div v-if="!loading">Apply</div>
+                      <div class="svg" v-else>
+                        <svg version="1.1" id="L4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        viewBox="0 0 100 100" enable-background="new 0 0 0 0" xml:space="preserve">
+                          <circle fill="#fff" stroke="none" cx="6" cy="50" r="6">
+                            <animate
+                              attributeName="opacity"
+                              dur="1s"
+                              values="0;1;0"
+                              repeatCount="indefinite"
+                              begin="0.1"/>
+                          </circle>
+                          <circle fill="#fff" stroke="none" cx="26" cy="50" r="6">
+                            <animate
+                              attributeName="opacity"
+                              dur="1s"
+                              values="0;1;0"
+                              repeatCount="indefinite"
+                              begin="0.2"/>
+                          </circle>
+                          <circle fill="#fff" stroke="none" cx="46" cy="50" r="6">
+                            <animate
+                              attributeName="opacity"
+                              dur="1s"
+                              values="0;1;0"
+                              repeatCount="indefinite"
+                              begin="0.3"/>
+                          </circle>
+                        </svg>
+                      </div>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
   <!--modal content-->
   <div v-else class="relative top-20 mx-auto mb-10 p-5 border w-96 shadow-lg rounded-md bg-white">
     <div class="mt-3 text-center">
@@ -163,7 +165,7 @@
         <router-link to="/staff">
           <button
             class="px-4 py-2 text-white text-base font-medium rounded-md w-full shadow-sm bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          >            
+          >
             Okay
           </button>
         </router-link>
@@ -209,7 +211,7 @@ export default {
         email.value = staffPre.value[0].email
         department.value = staffPre.value[0].department
         if(error) {
-          // console.log(error)
+          console.log("error o ah!")
         } else {
           loaded.value = false
         }
