@@ -15,7 +15,7 @@
         </p>
       </div>
       <div class="border-t border-gray-200">
-        <dl v-for="details in leaveDetails">
+        <dl v-for="details in leaveDetails" :key="details.id">
           <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-500">
               Full name
