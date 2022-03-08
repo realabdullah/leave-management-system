@@ -12,7 +12,7 @@
         </h3>
       </div>
       <div class="border-t border-gray-200">
-        <dl v-for="details in requestDetails">
+        <dl v-for="details in requestDetails" :key="details.id">
           <div
             class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
           >
