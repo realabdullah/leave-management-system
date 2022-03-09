@@ -217,6 +217,7 @@ export default {
     const router = useRouter()
     const userId = computed(() => route.params.id)
     const leaveDetails = ref()
+    const comment = ref()
     const loading = ref(false)
     const approving = ref(false)
     const rejecting = ref(false)
@@ -252,7 +253,8 @@ export default {
         user.name = leaveDetails.value[0].name,
         user.email = leaveDetails.value[0].email,
         user.leave = leaveDetails.value[0].leave_type,
-        user.status = leaveDetails.value[0].status
+        user.status = leaveDetails.value[0].status,
+
         console.log(user)
         const response = await axios.post(process.env.VUE_APP_HEROKU, user);
         console.log(response)
@@ -264,13 +266,18 @@ export default {
         approving.value = true
         const { data, error } = await supabase
         .from('leaves')
-        .update({ status: 'Approved' })
+        .update(
+          { 
+          status: 'Approved',
+          comment: comment.value 
+          }
+        )
         .eq('id', userId.value)
         if (error) {
           // console.log(error)
           approving.value = false
         } else {
-          // console.log(data)
+          console.log(data)
           await getLeaveDetails()
           await approvalMail()
           router.push({
@@ -288,10 +295,15 @@ export default {
         rejecting.value = true
         const { data, error } = await supabase
         .from('leaves')
-        .update({ status: 'Declined' })
+        .update(
+          { 
+          status: 'Declined',
+          comment: comment.value 
+          }
+        )
         .eq('id', userId.value)
         if (error) {
-          // console.log(error)
+          console.log(error)
           rejecting.value = false
         } else {
           // console.log(data)
@@ -317,7 +329,8 @@ export default {
       approve,
       reject,
       approving,
-      rejecting
+      rejecting,
+      comment
     }
   }
 }
