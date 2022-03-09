@@ -78,6 +78,7 @@
             </dt>
             <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
               {{ details.from_date }}
+              <input v-model="from_date" type="date"> (Click here to modify)
             </dd>
           </div>
           <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -86,6 +87,7 @@
             </dt>
             <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
               {{ details.to_date }}
+              <input v-model="to_date" type="date"> (Click here to modify)
             </dd>
           </div>
           <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -225,6 +227,7 @@ export default {
     const router = useRouter()
     const userId = computed(() => route.params.id)
     const leaveDetails = ref()
+    const from_date = ref()
     const comment = ref()
     const loading = ref(false)
     const approving = ref(false)
@@ -276,8 +279,10 @@ export default {
         .from('leaves')
         .update(
           { 
-          status: 'Approved',
-          comment: comment.value 
+            status: 'Approved',
+            comment: comment.value,
+            from_date: from_date.value,
+            to_date: to_date.value
           }
         )
         .eq('id', userId.value)
@@ -305,8 +310,10 @@ export default {
         .from('leaves')
         .update(
           { 
-          status: 'Declined',
-          comment: comment.value 
+            status: 'Declined',
+            comment: comment.value,
+            from_date: from_date.value,
+            to_date: to_date.value
           }
         )
         .eq('id', userId.value)
@@ -332,6 +339,8 @@ export default {
     })
 
     return {
+      from_date,
+      to_date,
       loading,
       leaveDetails,
       approve,
