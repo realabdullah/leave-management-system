@@ -231,7 +231,7 @@ export default {
         .update(
           { 
             hou_status: 'Approved',
-            comment: comment.value
+            hou_comment: comment.value
           }
         )
         .eq('id', userId.value)
@@ -258,7 +258,7 @@ export default {
         .update(
           { 
             hou_status: 'Declined',
-            comment: comment.value
+            hou_comment: comment.value
           }
         )
         .eq('id', userId.value)
