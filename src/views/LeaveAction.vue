@@ -228,6 +228,7 @@ export default {
     const userId = computed(() => route.params.id)
     const leaveDetails = ref()
     const from_date = ref()
+    const to_date = ref()
     const comment = ref()
     const loading = ref(false)
     const approving = ref(false)
