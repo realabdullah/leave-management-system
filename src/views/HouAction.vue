@@ -15,7 +15,7 @@
         </p>
       </div>
       <div class="border-t border-gray-200">
-        <dl v-for="details in leaveDetails">
+        <dl v-for="details in leaveDetails" :key="details.id">
           <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-500">
               Full name
@@ -97,6 +97,16 @@
             </dd>
           </div>
           <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">
+              Comment
+            </dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              <label class="block">
+                <textarea v-model="comment" class="form-textarea mt-1 block w-full p-2" rows="3" placeholder="Please add a comment as to why you are taking this action." required></textarea>
+              </label>
+            </dd>
+          </div>
+          <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-500">
               HOU Action
             </dt>
@@ -190,6 +200,7 @@ export default {
     const router = useRouter()
     const userId = computed(() => route.params.id)
     const leaveDetails = ref()
+    const comment = ref()
     const approving = ref(false)
     const rejecting = ref(false)
     const loading = ref(false)
@@ -217,7 +228,12 @@ export default {
         approving.value = true
         const { data, error } = await supabase
         .from('leaves')
-        .update({ hou_status: 'Approved' })
+        .update(
+          { 
+            hou_status: 'Approved',
+            comment: comment.value
+          }
+        )
         .eq('id', userId.value)
         if (error) {
           // console.log(error)
@@ -239,7 +255,12 @@ export default {
         rejecting.value = true
         const { data, error } = await supabase
         .from('leaves')
-        .update({ hou_status: 'Declined' })
+        .update(
+          { 
+            hou_status: 'Declined',
+            comment: comment.value
+          }
+        )
         .eq('id', userId.value)
         if (error) {
           // console.log(error)
@@ -262,6 +283,7 @@ export default {
     })
 
     return {
+      comment,
       loading,
       leaveDetails,
       approve,
