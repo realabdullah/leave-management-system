@@ -18,10 +18,16 @@
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Date Registered
                 </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Role
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Assign Role
+                </th>
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <tr v-for="employee in employeesData">
+              <tr v-for="employee in employeesData" :key="employee.id">
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="flex items-center">
                     <div class="ml-4">
@@ -42,9 +48,19 @@
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {{ dateTime(employee.created_at) }}
                 </td>
-              </tr>
-
-              <!-- More people... -->
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-900">
+                    {{ employee.rolee }}
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-900">
+                    <router-link :to="`/assign-role/${employee.employee_id}`" class="text-indigo-600 hover:text-indigo-900">
+                      Assign
+                    </router-link>
+                  </div>
+                </td>
+              </tr>              
             </tbody>
           </table>
         </div>
@@ -61,7 +77,23 @@ import moment from 'moment'
 export default {
   setup () {
     const employeesData = ref([])
+    const role = ref()
     const loading = ref(false)
+
+    // const getRoles = async () => {
+    //   try {
+    //     const { data: user_roles, error} = await supabase
+    //     .from('user_roles')
+    //     .select('*')
+    //     roles.value = user_roles
+    //     if (error) {
+    //       console.log(error)
+    //     }
+    //   }
+    //   catch (error) {
+
+    //   }
+    // }
 
     const getEmployees = async () => {
       try {
@@ -69,7 +101,7 @@ export default {
         .from('employees')
         .select('*')
         employeesData.value = employees
-        // console.log(employeesData.value)
+        console.log(employeesData.value)
         if (error) {
           // console.log(error)
         } else {
@@ -81,20 +113,44 @@ export default {
       }
     }
 
+    const assignRole = async () => {
+      try {
+        const { data, error } = await supabase
+        .from('employees')
+        .update(
+          { 
+            rolee: role.value
+          }
+        )
+        .eq('id', userId.value)
+        if (error) {
+          console.log(error)
+        } else {
+          console.log(data)
+        }
+      }
+      catch (error) {
+
+      }
+    }
+
     function dateTime(value) {
       return moment(value).format('llll')
     }
 
     onBeforeMount(() => {
       loading.value = true
+      // getRoles()
       getEmployees()
       const user = supabase.auth.user()
       // console.log(user)
     })
 
     return {
+      role,
       loading,
       employeesData,
+      assignRole,
       dateTime
     }
   }

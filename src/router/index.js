@@ -109,6 +109,12 @@ const routes = [
     name: 'Request-action',
     component: () => import('../views/RequestAction.vue'),
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/assign-role/:id',
+    name: 'Assign Role',
+    component: () => import('../views/AssignRole.vue'),
+    meta: { requiresAuth: true }
   }
 ]
 
