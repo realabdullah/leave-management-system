@@ -135,15 +135,15 @@ export default {
       userRoles.value = user_roles
       userType.value = userRoles.value[0].role
       // console.log(userType.value)
-      if (userType.value == 'staff') {
+      if (userType.value === 'staff') {
         router.push({
           path: '/staff'
         })
-      } else if (userType.value == 'mod') {
+      } else if (userType.value === 'mod') {
         router.push({
           path: '/head-of-unit'
         })
-      } else if (userType.value == 'admin') {
+      } else if (userType.value === 'admin') {
         router.push({
           path: '/admin'
         })
