@@ -245,11 +245,11 @@ export default {
     const getUserDetails = async () => {
       loading.value = true;
       try {
-        const { data: employees, error } = await supabase
-          .from("employees")
-          .select("*")
-        .eq('employee_id', userId.value)
-        userDetails.value = employees;
+        const { data: user_roles, error } = await supabase
+        .from("user_roles")
+        .select('*')
+        .eq('user_id', userId.value)
+        userDetails.value = user_roles;
         if (error) {
           console.log(error);
         } else {
@@ -262,14 +262,14 @@ export default {
     const assignAdmin = async () => {
       assigningAdmin.value = true
       try {
-        const { data: employees, error } = await supabase
-        .from('employees')
+        const { data: user_roles, error } = await supabase
+        .from('user_roles')
         .update(
           {
-            rolee: admin.value
+            role: admin.value
           }
         )
-        .eq('employee_id', userId.value)
+        .eq('user_id', userId.value)
         if (error) {
           assigningAdmin.value = false
           console.log(error)
@@ -289,14 +289,14 @@ export default {
     const assignHou = async () => {
       assigningHou.value = true
       try {
-        const { data: employees, error } = await supabase
-        .from('employees')
+        const { data: user_roles, error } = await supabase
+        .from('user_roles')
         .update(
           {
-            rolee: hou.value
+            role: hou.value
           }
         )
-        .eq('employee_id', userId.value)
+        .eq('user_id', userId.value)
         if (error) {
           assigningHou.value = false
           console.log(error)
@@ -309,21 +309,21 @@ export default {
           assigningHou.value = false
         }
       } catch (error) {
-
+          console.log(error)
       }
     }
 
     const assignStaff = async () => {
       assigningStaff.value = true
       try {
-        const { data: employees, error } = await supabase
-        .from('employees')
+        const { data: user_roles, error } = await supabase
+        .from('user_roles')
         .update(
           {
-            rolee: staff.value
+            role: staff.value
           }
         )
-        .eq('employee_id', userId.value)
+        .eq('user_id', userId.value)
         if (error) {
           assigningStaff.value = false
           console.log(error)
