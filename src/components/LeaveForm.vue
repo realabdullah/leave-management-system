@@ -158,7 +158,7 @@
       <h3 class="mt-3 text-lg leading-6 font-medium text-gray-900">Success!</h3>
       <div class="mt-2 px-7 py-3">
         <p class="text-sm text-gray-500">
-          You have successfully apply for a leave.
+          You have successfully applied for a leave.
         </p>
       </div>
       <div class="items-center px-4 py-3">
@@ -256,11 +256,11 @@ export default {
       }
     }
 
-    onBeforeMount(() => {
+    onBeforeMount( async () => {
       loaded.value = true
       userId.value = supabase.auth.user().id
-      console.log(userId.value)
-      getStaffData()
+      // console.log(userId.value)
+      await getStaffData()
     })
 
     return {
