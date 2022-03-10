@@ -119,7 +119,7 @@
                 @click="reject"
                 class="group relative mr-3 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                <div v-if="!rejecting">HOU</div>
+                <div v-if="!assigningHou">HOU</div>
                 <div class="svg" v-else>
                   <svg
                     version="1.1"
@@ -286,12 +286,41 @@ export default {
       }
     }
 
+    const assignHou = async () => {
+      assigningHou.value = true
+      try {
+        const { data: employees, error } = await supabase
+        .from('employees')
+        .update(
+          {
+            rolee: hou.value
+          }
+        )
+        .eq('employee_id', userId.value)
+        if (error) {
+          assigningHou.value = false
+          console.log(error)
+        }
+        else {
+          console.log(data)
+          router.push({
+            path: '/employees'
+          })
+          assigningHou.value = false
+        }
+      } catch (error) {
+
+      }
+    }
+
+
     onBeforeMount(() => {
       getUserDetails();
     });
 
     return {
       assigningAdmin,
+      assigningHou,
       loading,
       userDetails
     };
