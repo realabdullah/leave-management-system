@@ -72,7 +72,7 @@
                 @click="admin"
                 class="group relative mr-3 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                <div v-if="!approving">Admin</div>
+                <div v-if="!assigningAdmin">Admin</div>
                 <div class="svg" v-else>
                   <svg
                     version="1.1"
@@ -234,8 +234,13 @@ export default {
     const router = useRouter();
     const userId = computed(() => route.params.id);
     const userDetails = ref();
+    const admin = ref('admin')
+    const hou = ref('mod')
+    const staff = ref('staff')
     const loading = ref(false);
-    const approving = ref(false);
+    const assigningAdmin = ref(false);
+    const assigningHou = ref(false);
+    const assigningStaff = ref(false);
 
     const getUserDetails = async () => {
       loading.value = true;
@@ -254,11 +259,39 @@ export default {
       } catch (error) {}
     };
 
+    const assignAdmin = async () => {
+      assigningAdmin.value = true
+      try {
+        const { data: employees, error } = await supabase
+        .from('employees')
+        .update(
+          {
+            rolee: admin.value
+          }
+        )
+        .eq('employee_id', userId.value)
+        if (error) {
+          assigningAdmin.value = false
+          console.log(error)
+        }
+        else {
+          console.log(data)
+          router.push({
+            path: '/employees'
+          })
+          assigningAdmin.value = false
+        }
+      } catch (error) {
+
+      }
+    }
+
     onBeforeMount(() => {
       getUserDetails();
     });
 
     return {
+      assigningAdmin,
       loading,
       userDetails
     };
