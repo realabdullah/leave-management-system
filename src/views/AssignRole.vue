@@ -14,7 +14,7 @@
         </p>
       </div>
       <div class="border-t border-gray-200">
-        <dl v-for="user in userDetails" :key="user.id">
+        <dl v-for="user in employeeData" :key="user.id">
           <div
             class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
           >
@@ -59,8 +59,8 @@
             class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
           >
             <dt class="text-sm font-medium text-gray-500">Role</dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              {{ user.rolee }}
+            <dd v-for="role in userDetails" :key="role.id" class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              {{ role.role }}
             </dd>
           </div>
           <div
@@ -234,6 +234,7 @@ export default {
     const router = useRouter();
     const userId = computed(() => route.params.id);
     const userDetails = ref();
+    const employeeData = ref()
     const admin = ref('admin')
     const hou = ref('mod')
     const staff = ref('staff')
@@ -258,6 +259,25 @@ export default {
         }
       } catch (error) {}
     };
+
+    const getEmployee = async () => {
+      try {
+        const { data: employees, error } = await supabase
+        .from('employees')
+        .select('*')
+        .eq('employee_id', userId.value)
+        employeeData.value = employees
+        console.log(employeeData.value)
+        if (error) {
+          // console.log(error)
+        } else {
+          loading.value = false
+        }
+      }
+      catch (error) {
+        // console.log(error)
+      }
+    }
 
     const assignAdmin = async () => {
       assigningAdmin.value = true
@@ -333,6 +353,7 @@ export default {
 
     onBeforeMount(() => {
       getUserDetails();
+      getEmployee()
     });
 
     return {
@@ -341,6 +362,7 @@ export default {
       assigningStaff,
       loading,
       userDetails,
+      employeeData,
       assignAdmin,
       assignHou,
       assignStaff
