@@ -69,7 +69,7 @@
             <dt class="text-sm font-medium text-gray-500">Assign New Role</dt>
             <dd class="flex mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
               <button
-                @click="admin"
+                @click="assignAdmin"
                 class="group relative mr-3 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 <div v-if="!assigningAdmin">Admin</div>
@@ -116,7 +116,7 @@
                 </div>
               </button>
               <button
-                @click="reject"
+                @click="assignHou"
                 class="group relative mr-3 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 <div v-if="!assigningHou">HOU</div>
@@ -163,10 +163,10 @@
                 </div>
               </button>
               <button
-                @click="staff"
+                @click="assignStaff"
                 class="group relative py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                <div v-if="!rejecting">Staff</div>
+                <div v-if="!assigningStaff">Staff</div>
                 <div class="svg" v-else>
                   <svg
                     version="1.1"
@@ -313,6 +313,33 @@ export default {
       }
     }
 
+    const assignStaff = async () => {
+      assigningStaff.value = true
+      try {
+        const { data: employees, error } = await supabase
+        .from('employees')
+        .update(
+          {
+            rolee: staff.value
+          }
+        )
+        .eq('employee_id', userId.value)
+        if (error) {
+          assigningStaff.value = false
+          console.log(error)
+        }
+        else {
+          console.log(data)
+          router.push({
+            path: '/employees'
+          })
+          assigningStaff.value = false
+        }
+      } catch (error) {
+
+      }
+    }
+
 
     onBeforeMount(() => {
       getUserDetails();
@@ -321,8 +348,12 @@ export default {
     return {
       assigningAdmin,
       assigningHou,
+      assigningStaff,
       loading,
-      userDetails
+      userDetails,
+      assignAdmin,
+      assignHou,
+      assignStaff
     };
   },
 };
