@@ -2,22 +2,22 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import { supabase } from '../supabase'
 import { ref } from 'vue'
-const userRoles = ref([])
-const userType = ref('')
+// const userRoles = ref([])
+// const userType = ref('')
 
-const getRole = async () => {
-  const { data: user_roles, error } = await supabase
-  .from('user_roles')
-  .select('role')
-  userRoles.value = user_roles
-  userType.value = userRoles.value[0].role
-  // console.log(userType.value)
-  if(userType.value === 'staff') {
-    await router.push({
-      path: '/staff'
-    })
-  }
-}
+// const getRole = async () => {
+//   const { data: user_roles, error } = await supabase
+//   .from('user_roles')
+//   .select('role')
+//   userRoles.value = user_roles
+//   userType.value = userRoles.value[0].role
+//   console.log(userType.value)
+//   if(userType.value === 'staff') {
+//     await router.push({
+//       path: '/'
+//     })
+//   }
+// }
 
 const routes = [
   {
@@ -132,11 +132,11 @@ router.beforeEach((to, from, next) => {
         name: 'Login'
       })
     } else {
-      getRole().then(r => {})
+      // getRole().then(r => {})
       next()
     }
   } else {
-    getRole().then(r => {})
+    // getRole().then(r => {})
     next()
   }
 })
