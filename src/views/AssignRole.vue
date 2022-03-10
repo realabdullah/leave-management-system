@@ -220,7 +220,7 @@
 <script>
 import AdminNav from "../components/AdminNav.vue";
 import { PaperClipIcon } from "@heroicons/vue/solid";
-import { ref, reactive, computed, onBeforeMount } from "vue";
+import { ref, computed, onBeforeMount } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { supabase } from "../supabase";
 
