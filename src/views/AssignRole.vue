@@ -262,11 +262,11 @@ export default {
     const assignAdmin = async () => {
       assigningAdmin.value = true
       try {
-        const { data: user_roles, error } = await supabase
+        const { data, error } = await supabase
         .from('user_roles')
         .update(
           {
-            role: admin.value
+            role: 'admin'
           }
         )
         .eq('user_id', userId.value)
@@ -274,13 +274,11 @@ export default {
           assigningAdmin.value = false
           console.log(error)
         }
-        else {
-          console.log(data)
-          router.push({
-            path: '/employees'
-          })
-          assigningAdmin.value = false
-        }
+        console.log(data)
+        router.push({
+          path: '/employees'
+        })
+        assigningAdmin.value = false
       } catch (error) {
 
       }
@@ -289,25 +287,19 @@ export default {
     const assignHou = async () => {
       assigningHou.value = true
       try {
-        const { data: user_roles, error } = await supabase
+        const { data, error } = await supabase
         .from('user_roles')
-        .update(
-          {
-            role: hou.value
-          }
-        )
+        .update({ role: 'mod' })
         .eq('user_id', userId.value)
         if (error) {
           assigningHou.value = false
           console.log(error)
         }
-        else {
-          console.log(data)
-          router.push({
-            path: '/employees'
-          })
-          assigningHou.value = false
-        }
+        console.log(data)
+        router.push({
+          path: '/employees'
+        })
+        assigningHou.value = false
       } catch (error) {
           console.log(error)
       }
@@ -316,11 +308,11 @@ export default {
     const assignStaff = async () => {
       assigningStaff.value = true
       try {
-        const { data: user_roles, error } = await supabase
+        const { data, error } = await supabase
         .from('user_roles')
         .update(
           {
-            role: staff.value
+            role: 'staff'
           }
         )
         .eq('user_id', userId.value)
@@ -328,13 +320,11 @@ export default {
           assigningStaff.value = false
           console.log(error)
         }
-        else {
-          console.log(data)
-          router.push({
-            path: '/employees'
-          })
-          assigningStaff.value = false
-        }
+        console.log(data)
+        router.push({
+          path: '/employees'
+        })
+        assigningStaff.value = false
       } catch (error) {
 
       }
