@@ -259,7 +259,7 @@ export default {
     onBeforeMount(() => {
       loaded.value = true
       userId.value = supabase.auth.user().id
-      // console.log(userId.value)
+      console.log(userId.value)
       getStaffData()
     })
 
