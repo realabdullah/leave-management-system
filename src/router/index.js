@@ -2,22 +2,26 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import { supabase } from '../supabase'
 import { ref } from 'vue'
-// const userRoles = ref([])
-// const userType = ref('')
+const userRole = ref([])
+const userType = ref('')
 
-// const getRole = async () => {
-//   const { data: user_roles, error } = await supabase
-//   .from('user_roles')
-//   .select('role')
-//   userRoles.value = user_roles
-//   userType.value = userRoles.value[0].role
-//   console.log(userType.value)
-//   if(userType.value === 'staff') {
-//     await router.push({
-//       path: '/'
-//     })
-//   }
-// }
+const gtRole = async () => {
+  const user = supabase.auth.user()
+  const { data: user_roles, error } = await supabase
+  .from('user_roles')
+  .select('*')
+  .eq('user_id', user.id)
+  userRole.value = user_roles
+  // console.log(userRole.value)
+  // userType.value = userRoles.value[0].role
+  // console.log(userType.value)
+  if(userType.value === 'staff') {
+    // console.log('staff')
+    await router.push({
+      path: '/'
+    })
+  }
+}
 
 const routes = [
   {
@@ -127,16 +131,17 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     const user = supabase.auth.user()
+    console.log(user.id)
     if (user == null) {
       next({
         name: 'Login'
       })
     } else {
-      // getRole().then(r => {})
+      gtRole().then(r => {})
       next()
     }
   } else {
-    // getRole().then(r => {})
+    gtRole().then(r => {})
     next()
   }
 })

@@ -129,10 +129,13 @@ export default {
     }
 
     const getRole = async () => {
+      const user = supabase.auth.user()
       const { data: user_roles, error } = await supabase
       .from('user_roles')
-      .select('role')
+      .select('*')
+      .eq('user_id', user.id)
       userRoles.value = user_roles
+      // console.log(userRoles.value)
       userType.value = userRoles.value[0].role
       // console.log(userType.value)
       if (userType.value == 'staff') {

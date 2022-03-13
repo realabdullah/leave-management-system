@@ -47,7 +47,7 @@
 
     <DisclosurePanel class="md:hidden">
       <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-        <DisclosureButton v-for="item in navigation" as="a" :href="item.href" :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'block px-3 py-2 rounded-md text-base font-medium']" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</DisclosureButton>
+        <DisclosureButton v-for="item in navigation" :key="item.id" as="a" :href="item.href" :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'block px-3 py-2 rounded-md text-base font-medium']" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</DisclosureButton>
       </div>
       <div class="pt-4 pb-3 border-t border-gray-700">
         <div class="mt-3 px-2 space-y-1">
@@ -102,7 +102,7 @@ export default {
     const logOut = async () => {
       try {
         const { error } = await supabase.auth.signOut()
-        // console.log('logged out!')
+        console.log('logged out!')
         router.push({
           path: '/'
         })

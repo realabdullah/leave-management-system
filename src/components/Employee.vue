@@ -77,23 +77,28 @@ import moment from 'moment'
 export default {
   setup () {
     const employeesData = ref([])
+    const id = ref()
     const role = ref()
+    const roles = ref()
     const loading = ref(false)
 
-    // const getRoles = async () => {
-    //   try {
-    //     const { data: user_roles, error} = await supabase
-    //     .from('user_roles')
-    //     .select('*')
-    //     roles.value = user_roles
-    //     if (error) {
-    //       console.log(error)
-    //     }
-    //   }
-    //   catch (error) {
+    const getRoles = async () => {
+      try {
+        const { data: user_roles, error} = await supabase
+        .from('user_roles')
+        .select('role')
+        // .eq('user_id', id.value)
+        roles.value = user_roles
+        console.log('yeah')
+        console.log(roles.value)
+        if (error) {
+          console.log(error)
+        }
+      }
+      catch (error) {
 
-    //   }
-    // }
+      }
+    }
 
     const getEmployees = async () => {
       try {
@@ -106,6 +111,11 @@ export default {
           // console.log(error)
         } else {
           loading.value = false
+          for(let i = 0; i <= employeesData.value.length; i++) {
+            id.value = employeesData.value[i].employee_id
+            console.log(id.value)
+          }
+          getRoles()
         }
       }
       catch (error) {
@@ -140,9 +150,8 @@ export default {
 
     onBeforeMount(() => {
       loading.value = true
-      // getRoles()
-      getEmployees()
       const user = supabase.auth.user()
+      getEmployees()
       // console.log(user)
     })
 
@@ -151,7 +160,9 @@ export default {
       loading,
       employeesData,
       assignRole,
-      dateTime
+      dateTime,
+      getRoles,
+      roles
     }
   }
 }
