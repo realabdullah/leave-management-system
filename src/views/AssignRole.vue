@@ -317,7 +317,7 @@ export default {
           assigningHou.value = false
           // console.log(error)
         }
-        console.log(data)
+        // console.log(data)
         router.push({
           path: '/employees'
         })
@@ -342,7 +342,7 @@ export default {
           assigningStaff.value = false
           // console.log(error)
         }
-        console.log(data)
+        // console.log(data)
         router.push({
           path: '/employees'
         })
