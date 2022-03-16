@@ -19,10 +19,7 @@
                   Date Registered
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Role
-                </th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Assign Role
+                  View & Assign Role
                 </th>
               </tr>
             </thead>
@@ -50,13 +47,8 @@
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="text-sm text-gray-900">
-                    {{ employee.rolee }}
-                  </div>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="text-sm text-gray-900">
                     <router-link :to="`/assign-role/${employee.employee_id}`" class="text-indigo-600 hover:text-indigo-900">
-                      Assign
+                      View & Assign
                     </router-link>
                   </div>
                 </td>
@@ -90,10 +82,10 @@ export default {
         .select('role')
         // .eq('user_id', id.value)
         roles.value = user_roles
-        console.log('yeah')
-        console.log(roles.value)
+        // console.log('yeah')
+        // console.log(roles.value)
         if (error) {
-          console.log(error)
+          // console.log(error)
         }
       }
       catch (error) {
@@ -107,14 +99,14 @@ export default {
         .from('employees')
         .select('*')
         employeesData.value = employees
-        console.log(employeesData.value)
+        // console.log(employeesData.value)
         if (error) {
           // console.log(error)
         } else {
           loading.value = false
           for(let i = 0; i <= employeesData.value.length; i++) {
             id.value = employeesData.value[i].employee_id
-            console.log(id.value)
+            // console.log(id.value)
           }
           getRoles()
         }
@@ -135,9 +127,9 @@ export default {
         )
         .eq('id', userId.value)
         if (error) {
-          console.log(error)
+          // console.log(error)
         } else {
-          console.log(data)
+          // console.log(data)
         }
       }
       catch (error) {

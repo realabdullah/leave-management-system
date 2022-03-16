@@ -60,7 +60,9 @@
           >
             <dt class="text-sm font-medium text-gray-500">Role</dt>
             <dd v-for="role in userDetails" :key="role.id" class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              {{ role.role }}
+              <p v-if="role.role == 'mod'">Head Of Unit</p>
+              <p v-if="role.role == 'staff'">Staff</p>
+              <p v-if="role.role == 'admin'">Admin</p>
             </dd>
           </div>
           <div
@@ -252,9 +254,9 @@ export default {
         .eq('user_id', userId.value)
         userDetails.value = user_roles;
         if (error) {
-          console.log(error);
+          // console.log(error);
         } else {
-          console.log(userDetails.value);
+          // console.log(userDetails.value);
           loading.value = false;
         }
       } catch (error) {}
@@ -267,7 +269,7 @@ export default {
         .select('*')
         .eq('employee_id', userId.value)
         employeeData.value = employees
-        console.log(employeeData.value)
+        // console.log(employeeData.value)
         if (error) {
           // console.log(error)
         } else {
@@ -292,9 +294,9 @@ export default {
         .eq('user_id', userId.value)
         if (error) {
           assigningAdmin.value = false
-          console.log(error)
+          // console.log(error)
         }
-        console.log(data)
+        // console.log(data)
         router.push({
           path: '/employees'
         })
@@ -313,7 +315,7 @@ export default {
         .eq('user_id', userId.value)
         if (error) {
           assigningHou.value = false
-          console.log(error)
+          // console.log(error)
         }
         console.log(data)
         router.push({
@@ -321,7 +323,7 @@ export default {
         })
         assigningHou.value = false
       } catch (error) {
-          console.log(error)
+          // console.log(error)
       }
     }
 
@@ -338,7 +340,7 @@ export default {
         .eq('user_id', userId.value)
         if (error) {
           assigningStaff.value = false
-          console.log(error)
+          // console.log(error)
         }
         console.log(data)
         router.push({
