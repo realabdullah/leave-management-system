@@ -81,6 +81,7 @@ export default {
     const role = ref()
     const roles = ref()
     const loading = ref(false)
+    const searchQuery = ref('admin')
 
     const getRoles = async () => {
       try {
