@@ -265,11 +265,11 @@ export default {
         user.name = leaveDetails.value[0].name,
         user.email = leaveDetails.value[0].email,
         user.leave = leaveDetails.value[0].leave_type,
-        user.status = leaveDetails.value[0].status,
+        user.status = leaveDetails.value[0].status
 
-        console.log(user)
+        // console.log(user)
         const response = await axios.post(process.env.VUE_APP_HEROKU, user);
-        console.log(response)
+        // console.log(response)
       } catch (error) {}
     }
 
@@ -291,7 +291,7 @@ export default {
           // console.log(error)
           approving.value = false
         } else {
-          console.log(data)
+          // console.log(data)
           await getLeaveDetails()
           await approvalMail()
           router.push({
@@ -319,7 +319,7 @@ export default {
         )
         .eq('id', userId.value)
         if (error) {
-          console.log(error)
+          // console.log(error)
           rejecting.value = false
         } else {
           // console.log(data)
