@@ -7,19 +7,21 @@ const userType = ref('')
 
 const gtRole = async () => {
   const user = supabase.auth.user()
-  const { data: user_roles, error } = await supabase
-  .from('user_roles')
-  .select('*')
-  .eq('user_id', user.id)
-  userRole.value = user_roles
-  // console.log(userRole.value)
-  // userType.value = userRoles.value[0].role
-  // console.log(userType.value)
-  if(userType.value === 'staff') {
-    // console.log('staff')
-    await router.push({
-      path: '/'
-    })
+  if(user) {
+    const { data: user_roles, error } = await supabase
+    .from('user_roles')
+    .select('*')
+    .eq('user_id', user.id)
+    userRole.value = user_roles
+    // console.log(userRole.value)
+    // userType.value = userRoles.value[0].role
+    // console.log(userType.value)
+    if(userType.value === 'staff') {
+      // console.log('staff')
+      await router.push({
+        path: '/'
+      })
+    }
   }
 }
 
