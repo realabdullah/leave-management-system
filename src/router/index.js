@@ -121,6 +121,12 @@ const routes = [
     name: 'Assign Role',
     component: () => import('../views/AssignRole.vue'),
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/leave/:id',
+    name: 'Leave',
+    component: () => import('../views/StaffLeaveView.vue'),
+    meta: { requiresAuth: true }
   }
 ]
 
