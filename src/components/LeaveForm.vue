@@ -2,7 +2,33 @@
   <div v-if="loaded" class="wrapper">
     <span class="loader"><span class="loader-inner"></span></span>
   </div>
-  <div v-if="!applied && !loaded">
+  <!--modal content-->
+  <div v-if="applied && loaded" class="relative top-20 mx-auto mb-10 p-5 border w-96 shadow-lg rounded-md bg-white">
+    <div class="mt-3 text-center">
+      <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100">
+        <svg class="h-6 w-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
+          </path>
+        </svg>
+      </div>
+      <h3 class="mt-3 text-lg leading-6 font-medium text-gray-900">Success!</h3>
+      <div class="mt-2 px-7 py-3">
+        <p class="text-sm text-gray-500">
+          You have successfully applied for a leave.
+        </p>
+      </div>
+      <div class="items-center px-4 py-3">
+        <router-link to="/staff">
+          <button
+            class="px-4 py-2 text-white text-base font-medium rounded-md w-full shadow-sm bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          >
+            Okay
+          </button>
+        </router-link>
+      </div>
+    </div>
+  </div>
+  <div v-else>
     <form @submit.prevent="addLeave">
       <div class="mt-10 sm:mt-0">
         <div class="md:grid md:grid-cols-3 md:gap-6">
@@ -79,8 +105,16 @@
                     <select v-model="lastLeaveType" id="leave-type" name="leave-type" autocomplete="leave" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                       <option value=""></option>
                       <option value="Annual Leave">Annual Leave</option>
-                      <option value="Paternity Leave">Paternity Leave</option>
-                      <option value="Maternity Leave">Maternity Leave</option>
+                      <option value="Research Leave">Research Leave</option>
+                      <option value="Casual Leave">Casual Leave</option>
+                      <option value="Compassionate Leave">Compassionate Leave</option>
+                      <option value="Examination Leave">Examination Leave</option>
+                      <option value="Leave for trade union conference and business">Leave for trade union conference and business</option>
+                      <option value="Leave for approved sporting events">Leave for approved sporting events</option>
+                      <option value="Study leave with pay">Study leave with pay</option>
+                      <option value="Study leave without pay">Study leave without pay</option>
+                      <option value="Short term leave with pay">Short term leave with pay</option>
+                      <option value="Training Leave">Training Leave</option>
                     </select>
                   </div>
 
@@ -89,8 +123,16 @@
                     <select v-model="leaveType" id="leave-type" name="leave-type" autocomplete="leave" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                       <option value=""></option>
                       <option value="Annual Leave">Annual Leave</option>
-                      <option value="Paternity Leave">Paternity Leave</option>
-                      <option value="Maternity Leave">Maternity Leave</option>
+                      <option value="Research Leave">Research Leave</option>
+                      <option value="Casual Leave">Casual Leave</option>
+                      <option value="Compassionate Leave">Compassionate Leave</option>
+                      <option value="Examination Leave">Examination Leave</option>
+                      <option value="Leave for trade union conference and business">Leave for trade union conference and business</option>
+                      <option value="Leave for approved sporting events">Leave for approved sporting events</option>
+                      <option value="Study leave with pay">Study leave with pay</option>
+                      <option value="Study leave without pay">Study leave without pay</option>
+                      <option value="Short term leave with pay">Short term leave with pay</option>
+                      <option value="Training Leave">Training Leave</option>
                     </select>
                   </div>
 
@@ -145,32 +187,6 @@
         </div>
       </div>
     </form>
-  </div>
-  <!--modal content-->
-  <div v-else class="relative top-20 mx-auto mb-10 p-5 border w-96 shadow-lg rounded-md bg-white">
-    <div class="mt-3 text-center">
-      <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100">
-        <svg class="h-6 w-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
-          </path>
-        </svg>
-      </div>
-      <h3 class="mt-3 text-lg leading-6 font-medium text-gray-900">Success!</h3>
-      <div class="mt-2 px-7 py-3">
-        <p class="text-sm text-gray-500">
-          You have successfully applied for a leave.
-        </p>
-      </div>
-      <div class="items-center px-4 py-3">
-        <router-link to="/staff">
-          <button
-            class="px-4 py-2 text-white text-base font-medium rounded-md w-full shadow-sm bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          >
-            Okay
-          </button>
-        </router-link>
-      </div>
-    </div>
   </div>
 </template>
 
