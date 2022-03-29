@@ -114,8 +114,9 @@
                       <option value="Study leave with pay">Study leave with pay</option>
                       <option value="Study leave without pay">Study leave without pay</option>
                       <option value="Short term leave with pay">Short term leave with pay</option>
+<option value="Others">Others</option>
                       <option value="Training Leave">Training Leave</option>
-                      <option value="Others">Others</option>
+                      
                     </select>
                   </div>
 
