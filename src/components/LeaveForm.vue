@@ -3,7 +3,7 @@
     <span class="loader"><span class="loader-inner"></span></span>
   </div>
   <!--modal content-->
-  <div v-if="applied && loaded" class="relative top-20 mx-auto mb-10 p-5 border w-96 shadow-lg rounded-md bg-white">
+  <div v-if="applied" class="relative top-20 mx-auto mb-10 p-5 border w-96 shadow-lg rounded-md bg-white">
     <div class="mt-3 text-center">
       <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100">
         <svg class="h-6 w-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
