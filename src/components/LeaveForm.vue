@@ -270,8 +270,6 @@ export default {
         loading.value = true
         lastLeaveType.value = lastLeaveTypeO.value
         leaveType.value = leaveTypeO.value
-        console.log(lastLeaveType.value)
-        console.log(leaveType.value)
         const { data, error } = await supabase
         .from('leaves')
         .insert([
