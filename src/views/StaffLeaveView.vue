@@ -104,7 +104,7 @@
 <script>
 import { PaperClipIcon } from '@heroicons/vue/solid'
 import { ref, computed, onBeforeMount } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { supabase } from '../supabase'
 import StaffNav from "../components/StaffNav";
 
@@ -114,6 +114,7 @@ export default {
     PaperClipIcon
   },
   setup () {
+    const route = useRoute()
     const userId = computed(() => route.params.id)
     const leaveDetails = ref()
     const loading = ref(false)
