@@ -102,7 +102,7 @@
 
                   <div class="col-span-6 sm:col-span-3">
                     <label for="leave-type" class="block text-sm font-medium text-gray-700">Last Leave Type</label>
-                    <select v-model="lastLeaveType" id="leave-type" name="leave-type" autocomplete="leave" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <select @change="others" v-model="lastLeaveType" id="leave-type" name="leave-type" autocomplete="leave" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                       <option value=""></option>
                       <option value="Annual Leave">Annual Leave</option>
                       <option value="Research Leave">Research Leave</option>
@@ -115,12 +115,18 @@
                       <option value="Study leave without pay">Study leave without pay</option>
                       <option value="Short term leave with pay">Short term leave with pay</option>
                       <option value="Training Leave">Training Leave</option>
+                      <option value="Others">Others</option>
                     </select>
+                  </div>
+
+                  <div v-if="isOthers" class="col-span-6 sm:col-span-4">
+                    <label for="department" class="block text-sm font-medium text-gray-700">Other(Leave Type)</label>
+                    <input v-model="lastLeaveTypeO" type="text" name="department" id="department" autocomplete="department" class="mt-1 px-3 py-2 border focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                   </div>
 
                   <div class="col-span-6 sm:col-span-3">
                     <label for="leave-type" class="block text-sm font-medium text-gray-700">Leave Type (Now)</label>
-                    <select v-model="leaveType" id="leave-type" name="leave-type" autocomplete="leave" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                    <select @change="other" v-model="leaveType" id="leave-type" name="leave-type" autocomplete="leave" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                       <option value=""></option>
                       <option value="Annual Leave">Annual Leave</option>
                       <option value="Research Leave">Research Leave</option>
@@ -133,7 +139,13 @@
                       <option value="Study leave without pay">Study leave without pay</option>
                       <option value="Short term leave with pay">Short term leave with pay</option>
                       <option value="Training Leave">Training Leave</option>
+                      <option value="Other">Other</option>
                     </select>
+                  </div>
+
+                  <div v-if="isOther" class="col-span-6 sm:col-span-4">
+                    <label for="department" class="block text-sm font-medium text-gray-700">Other(Leave Type Now)</label>
+                    <input v-model="leaveTypeO" type="text" name="department" id="department" autocomplete="department" class="mt-1 px-3 py-2 border focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                   </div>
 
                   <div class="col-span-6">
@@ -215,6 +227,10 @@ export default {
     const loading = ref(false)
     const loaded = ref(false)
     const applied = ref(false)
+    const isOthers = ref(false)
+    const isOther = ref(false)
+    const lastLeaveTypeO = ref('')
+    const leaveTypeO = ref('')
 
     const getStaffData = async () => {
       try {
@@ -237,9 +253,25 @@ export default {
       }
     }
 
+    const others = async () => {
+      if(lastLeaveType.value == "Others") {
+        isOthers.value = true
+      }
+    }
+
+    const other = async () => {
+      if(leaveType.value == "Other") {
+        isOther.value = true
+      }
+    }
+
     const addLeave = async () => {
       try {
         loading.value = true
+        lastLeaveType.value = lastLeaveTypeO.value
+        leaveType.value = leaveTypeO.value
+        console.log(lastLeaveType.value)
+        console.log(leaveType.value)
         const { data, error } = await supabase
         .from('leaves')
         .insert([
@@ -280,6 +312,12 @@ export default {
     })
 
     return {
+      leaveTypeO,
+      lastLeaveTypeO,
+      isOthers,
+      isOther,
+      others,
+      other,
       loaded,
       staffName,
       email,
