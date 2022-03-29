@@ -111,9 +111,9 @@ export default {
         .eq('id', userId.value)
         leaveDetails.value = leaves
         if(error) {
-          console.log(error)
+          // console.log(error)
         } else {
-          console.log(leaveDetails.value)
+          // console.log(leaveDetails.value)
           loading.value = false
         }
       } catch (error) {
