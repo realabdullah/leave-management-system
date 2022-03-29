@@ -33,7 +33,7 @@
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <tr v-for="leaves in allLeaves">
+              <tr v-for="leaves in allLeaves" :key="leaves.id">
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="flex items-center">
                     <div class="ml-4">
