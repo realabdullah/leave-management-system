@@ -1,78 +1,91 @@
+<script setup lang="ts">
+import { RouterLink, RouterView } from "vue-router";
+import HelloWorld from "./components/HelloWorld.vue";
+</script>
+
 <template>
-  <router-view/>
+  <header>
+    <img
+      alt="Vue logo"
+      class="logo"
+      src="@/assets/logo.svg"
+      width="125"
+      height="125"
+    />
+
+    <div class="wrapper">
+      <HelloWorld msg="You did it!" />
+
+      <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
+      </nav>
+    </div>
+  </header>
+
+  <RouterView />
 </template>
 
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+<style scoped>
+header {
+  line-height: 1.5;
+  max-height: 100vh;
 }
 
-.wrapper {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.logo {
+  display: block;
+  margin: 0 auto 2rem;
 }
 
-.loader {
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  border: 4px solid #1d1a7f;
-  animation: loader 2s infinite ease;
-}
-
-.loader-inner {
-  vertical-align: top;
-  display: inline-block;
+nav {
   width: 100%;
-  background-color: #1d1a7f;
-  animation: loader-inner 2s infinite ease-in;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 2rem;
 }
 
-@keyframes loader {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  25% {
-    transform: rotate(180deg);
-  }
-
-  50% {
-    transform: rotate(180deg);
-  }
-
-  75% {
-    transform: rotate(360deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
+nav a.router-link-exact-active {
+  color: var(--color-text);
 }
 
-@keyframes loader-inner {
-  0% {
-    height: 0%;
+nav a.router-link-exact-active:hover {
+  background-color: transparent;
+}
+
+nav a {
+  display: inline-block;
+  padding: 0 1rem;
+  border-left: 1px solid var(--color-border);
+}
+
+nav a:first-of-type {
+  border: 0;
+}
+
+@media (min-width: 1024px) {
+  header {
+    display: flex;
+    place-items: center;
+    padding-right: calc(var(--section-gap) / 2);
   }
 
-  25% {
-    height: 0%;
+  .logo {
+    margin: 0 2rem 0 0;
   }
 
-  50% {
-    height: 100%;
+  header .wrapper {
+    display: flex;
+    place-items: flex-start;
+    flex-wrap: wrap;
   }
 
-  75% {
-    height: 100%;
-  }
+  nav {
+    text-align: left;
+    margin-left: -1rem;
+    font-size: 1rem;
 
-  100% {
-    height: 0%;
+    padding: 1rem 0;
+    margin-top: 1rem;
   }
 }
 </style>
